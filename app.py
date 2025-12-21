@@ -7,6 +7,18 @@ from utils.data_generator import generate_messy_data
 from utils.cleaner import DataCleaner
 from utils.visualizer import plot_attendance_trend, plot_role_distribution, plot_attendance_histogram, get_chart_export_config
 from utils.health_metrics import DataHealthMetrics
+from utils.ui_helpers import (
+    initialize_session_state,
+    show_welcome_modal,
+    show_empty_state,
+    show_tutorial_step,
+    show_whats_new,
+    show_loading_message,
+    show_success_message,
+    show_error_message,
+    get_contextual_message,
+    MESSAGES
+)
 from datetime import datetime
 
 # Page Config
@@ -16,15 +28,42 @@ st.set_page_config(
     layout="wide"
 )
 
+# Initialize session state for UI features
+initialize_session_state()
+
+# Show welcome modal for first-time users
+if st.session_state.get('show_welcome', False):
+    show_welcome_modal()
+
 # Title & Description
 st.title("📊 Community Pulse: Intelligent Data Dashboard")
 st.markdown("""
-**Objective:** Transforming messy, raw member data into actionable insights.
-*Demonstrates: Data Engineering (Cleaning), Application Logic, and BI Dashboarding.*
+**Transform your data journey:** From messy, unstructured member records to crystal-clear insights in minutes.  
+*Powered by intelligent data engineering, automated cleaning pipelines, and interactive business intelligence.*
 """)
+
+# What's New panel
+show_whats_new()
 
 # --- SIDEBAR Controls ---
 st.sidebar.header("⚙️ Data Controls")
+
+# Add tutorial mode toggle
+tutorial_col1, tutorial_col2 = st.sidebar.columns([3, 1])
+with tutorial_col1:
+    if st.sidebar.checkbox("🎓 Tutorial Mode", value=st.session_state.get('tutorial_mode', False), help="Enable step-by-step guided tour"):
+        st.session_state['tutorial_mode'] = True
+        st.session_state['tutorial_step'] = 0
+    else:
+        if st.session_state.get('tutorial_mode', False):
+            st.session_state['tutorial_mode'] = False
+with tutorial_col2:
+    if st.sidebar.button("🎉", help="What's New"):
+        st.session_state['show_whats_new'] = not st.session_state.get('show_whats_new', False)
+        st.rerun()
+
+# Show tutorial if active
+show_tutorial_step(0)
 
 DATA_PATH = "data/messy_club_data.csv"
 
@@ -69,7 +108,7 @@ num_records = st.sidebar.slider(
     max_value=1000,
     value=st.session_state['num_records'],
     step=50,
-    help="Select how many records to generate"
+    help="📊 Select how many sample records to generate. More records = more realistic analysis, but slower processing."
 )
 st.session_state['num_records'] = num_records
 
@@ -77,24 +116,31 @@ messiness_level = st.sidebar.selectbox(
     "Messiness Level",
     options=['low', 'medium', 'high'],
     index=['low', 'medium', 'high'].index(st.session_state['messiness_level']),
-    help="Low: 3% duplicates, 2% errors | Medium: 10% duplicates, 5% errors | High: 20% duplicates, 15% errors"
+    help="🎲 Control data quality simulation:\n• Low: 3% duplicates, 2% errors (clean CRM)\n• Medium: 10% duplicates, 5% errors (typical export)\n• High: 20% duplicates, 15% errors (legacy system)"
 )
 st.session_state['messiness_level'] = messiness_level
 
-if st.sidebar.button("🔄 Generate New Data", type="primary"):
-    with st.spinner("Generating data..."):
+if st.sidebar.button("🔄 Generate New Data", type="primary", help="Create fresh sample data with the selected parameters"):
+    with show_loading_message(get_contextual_message("loading_data")):
         if not os.path.exists("data"):
             os.makedirs("data")
-        generate_messy_data(
-            num_records=num_records,
-            save_path=DATA_PATH,
-            messiness_level=messiness_level
-        )
-    st.sidebar.success(f"Generated {num_records} records!")
-    st.session_state['cleaned'] = False # Reset state
-    st.session_state['data_generated_at'] = datetime.now()
-    st.session_state['data_loaded_at'] = datetime.now()
-    st.rerun()
+        try:
+            generate_messy_data(
+                num_records=num_records,
+                save_path=DATA_PATH,
+                messiness_level=messiness_level
+            )
+            show_success_message(
+                get_contextual_message("data_generated", 
+                num_records=num_records, 
+                messiness=messiness_level)
+            )
+            st.session_state['cleaned'] = False # Reset state
+            st.session_state['data_generated_at'] = datetime.now()
+            st.session_state['data_loaded_at'] = datetime.now()
+            st.rerun()
+        except Exception as e:
+            show_error_message("Failed to generate data", str(e))
 
 st.sidebar.divider()
 
@@ -250,25 +296,67 @@ st.sidebar.divider()
 # --- 6. HELP/GUIDE SECTION ---
 with st.sidebar.expander("❓ Help & Guide", expanded=False):
     st.markdown("""
-    ### Quick Start Guide
+    ### 🎯 Quick Start Guide
     
-    1. **Generate Data**: Use the slider to set record count and select messiness level
-    2. **Clean Data**: Configure cleaning steps and run the pipeline in the 'Data Cleaning Ops' tab
-    3. **Analyze**: View insights in the 'Analytics Dashboard' tab
-    4. **Export**: Download your data in CSV or JSON format
+    **For First-Time Users:**
     
-    ### Tips
-    - 💡 Higher messiness = more data quality issues
-    - 💡 Toggle individual cleaning steps to see their impact
-    - 💡 Check Quick Stats for real-time data health
-    - 💡 Use Reset to start over with raw data
+    1. **📊 Generate Data**  
+       Use the slider to set record count (100-1000)  
+       Choose messiness level based on your scenario
     
-    ### Cleaning Steps
-    - **Names**: Standardizes capitalization
-    - **Emails**: Fixes format and removes invalid entries  
-    - **Duplicates**: Removes duplicate records
-    - **Dates**: Standardizes date formats
-    - **Missing**: Fills missing attendance values
+    2. **🧹 Clean Data**  
+       Navigate to 'Data Cleaning Ops' tab  
+       Configure cleaning steps (or use defaults)  
+       Click 'Run Cleaning Algorithms'
+    
+    3. **📈 Analyze Results**  
+       View insights in 'Analytics Dashboard' tab  
+       Use filters to focus on specific segments  
+       Compare raw vs. cleaned data
+    
+    4. **💾 Export**  
+       Download cleaned data as CSV or JSON  
+       Use export buttons in charts for visualizations
+    
+    ---
+    
+    ### 💡 Pro Tips
+    
+    - **Data Messiness Levels:**
+      - 🟢 **Low:** Well-maintained CRM (~3% issues)
+      - 🟡 **Medium:** Typical export (~10% issues)
+      - 🔴 **High:** Legacy system (~20% issues)
+    
+    - **Quick Stats Panel:**  
+      Shows real-time data health at a glance  
+      Updates automatically after cleaning
+    
+    - **View Toggle:**  
+      Switch between raw/cleaned data  
+      Compare before/after improvements
+    
+    - **Tutorial Mode:**  
+      Enable for step-by-step guidance  
+      Perfect for learning the workflow
+    
+    ---
+    
+    ### 🛠️ Cleaning Steps Explained
+    
+    - **Standardize Names:** Fixes capitalization (e.g., "john doe" → "John Doe")
+    - **Fix Emails:** Corrects format issues and removes invalid entries
+    - **Remove Duplicates:** Eliminates duplicate records based on email/name
+    - **Clean Dates:** Standardizes date formats to YYYY-MM-DD
+    - **Handle Missing:** Fills missing attendance values with 0
+    
+    ---
+    
+    ### 🆘 Need Help?
+    
+    - Hover over **ⓘ icons** for context-specific help
+    - Enable **Tutorial Mode** for guided walkthrough
+    - Check **What's New** for latest features
+    - All metrics include detailed tooltips
     """)
 
 
@@ -278,7 +366,28 @@ if os.path.exists(DATA_PATH):
     if 'data_loaded_at' not in st.session_state:
         st.session_state['data_loaded_at'] = datetime.now()
 else:
-    st.error("No data found. Please click 'Generate New Data' in the sidebar.")
+    # Show empty state when no data is available
+    show_empty_state(
+        icon=MESSAGES["no_data_generated"]["icon"],
+        title=MESSAGES["no_data_generated"]["title"],
+        message=MESSAGES["no_data_generated"]["message"]
+    )
+    
+    # Add helpful tips
+    st.info("""
+    **💡 Getting Started:**
+    
+    1. Look for the **sidebar on the left** ⬅️
+    2. Adjust your data generation settings (number of records, messiness level)
+    3. Click the **"🔄 Generate New Data"** button
+    4. Your dashboard will automatically populate with sample data!
+    
+    **What is data messiness?**
+    - **Low**: Simulates a well-maintained CRM system
+    - **Medium**: Typical data export with some quality issues
+    - **High**: Legacy system with significant data quality problems
+    """)
+    
     st.stop()
 
 # Initialize view state
@@ -314,8 +423,11 @@ else:
 
 st.divider()
 
-# 1. Dynamic KPI Row with tooltips
+# 1. Dynamic KPI Row with enhanced tooltips
 st.subheader(f"📊 Key Performance Indicators - {state_label} Data")
+st.caption("Real-time data quality metrics to track your cleaning progress")
+
+show_tutorial_step(1)
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -323,12 +435,12 @@ with col1:
     col1.metric(
         "Total Records", 
         metrics['total_records'],
-        help="The total number of records in the dataset"
+        help="📝 The complete count of all records in your dataset, including duplicates"
     )
     col1.metric(
         "Unique Records",
         metrics['unique_records'],
-        help="Number of unique records after removing duplicates"
+        help="✨ Number of distinct records after removing duplicates (higher is better for data quality)"
     )
 
 with col2:
@@ -337,47 +449,50 @@ with col2:
         metrics['duplicate_records'],
         delta=f"-{metrics['duplicate_records']}" if metrics['duplicate_records'] > 0 else None,
         delta_color="inverse",
-        help="Number of duplicate records detected in the dataset"
+        help="🔄 Records that appear more than once, based on email and name matching (lower is better)"
     )
     col2.metric(
         "Missing Values",
         metrics['null_cells'],
         delta=f"-{metrics['null_cells']}" if metrics['null_cells'] > 0 else None,
         delta_color="inverse",
-        help="Total number of empty or null cells across all columns"
+        help="❓ Total count of empty or null cells across all columns (0 is ideal)"
     )
 
 with col3:
     col3.metric(
         "Completeness Score",
         f"{metrics['completeness_score']}%",
-        help="Percentage of non-null values in the dataset (higher is better)"
+        help="✅ Percentage of cells with valid data (100% = no missing values, ideal for analysis)"
     )
     col3.metric(
         "Duplicate Score",
         f"{metrics['duplicate_score']}%",
-        help="Percentage of unique records (100% means no duplicates)"
+        help="🎯 Percentage of unique records (100% = no duplicates, clean dataset)"
     )
 
 with col4:
     col4.metric(
         "Formatting Score",
         f"{metrics['formatting_score']}%",
-        help="Percentage of properly formatted emails, dates, and names"
+        help="📋 Percentage of properly formatted data including valid emails, dates, and standardized names (100% is ideal)"
     )
     # Overall health score with color coding
     score = metrics['overall_score']
     if score >= 90:
         score_color = "🟢"
+        score_label = "Excellent"
     elif score >= 70:
         score_color = "🟡"
+        score_label = "Good"
     else:
         score_color = "🔴"
+        score_label = "Needs Work"
     
     col4.metric(
         "Data Health Score",
         f"{score_color} {score}%",
-        help="Overall data quality score based on completeness, duplicates, and formatting (weighted average: 40% completeness, 30% duplicates, 30% formatting)"
+        help=f"🏥 Overall data quality assessment: {score_label}\n\nCalculated from:\n• 40% Completeness\n• 30% Uniqueness\n• 30% Formatting\n\n90%+ = Excellent | 70-89% = Good | <70% = Needs Improvement"
     )
 
 # 2. Before/After Cleaning Comparison Section
@@ -460,7 +575,10 @@ if st.session_state.get('cleaned'):
 tab1, tab2, tab3 = st.tabs(["🧹 Data Cleaning Ops", "📈 Analytics Dashboard", "📄 Raw Data View"])
 
 with tab1:
-    st.subheader("Automated Data Hygiene Pipeline")
+    st.subheader("🧹 Automated Data Hygiene Pipeline")
+    st.caption("Configure and execute intelligent data cleaning operations")
+    
+    show_tutorial_step(2)
     
     col_demo, col_log = st.columns([1, 2])
     
@@ -468,27 +586,37 @@ with tab1:
         # Show selected steps
         selected_steps = [k for k, v in st.session_state['cleaning_steps'].items() if v]
         if selected_steps:
-            st.info(f"Ready to apply {len(selected_steps)} cleaning step(s). Configure steps in sidebar.")
+            st.success(f"✅ Ready to apply **{len(selected_steps)} cleaning step(s)**")
+            st.caption("💡 Configure steps in the sidebar to customize your cleaning pipeline")
         else:
-            st.warning("⚠️ No cleaning steps selected. Enable steps in the sidebar.")
+            show_empty_state(
+                icon="⚙️",
+                title="No Cleaning Steps Selected",
+                message="Enable at least one cleaning step in the sidebar to process your data."
+            )
         
-        if st.button("🚀 Run Cleaning Algorithms", type="primary", disabled=len(selected_steps) == 0):
+        show_tutorial_step(3)
+        
+        if st.button("🚀 Run Cleaning Algorithms", type="primary", disabled=len(selected_steps) == 0, help="Execute the configured cleaning pipeline on your dataset"):
             try:
-                cleaner = DataCleaner(raw_df)
-                clean_df = cleaner.clean_all(steps=selected_steps)
+                with show_loading_message(get_contextual_message("processing_cleaning", step_count=len(selected_steps))):
+                    cleaner = DataCleaner(raw_df)
+                    clean_df = cleaner.clean_all(steps=selected_steps)
+                    
+                    # Save to session state
+                    st.session_state['clean_df'] = clean_df
+                    st.session_state['clean_log'] = cleaner.log
+                    st.session_state['cleaned'] = True
+                    st.session_state['cleaning_completed_at'] = datetime.now()
+                    st.session_state['cleaning_duration'] = (cleaner.end_timestamp - cleaner.start_timestamp).total_seconds()
                 
-                # Save to session state
-                st.session_state['clean_df'] = clean_df
-                st.session_state['clean_log'] = cleaner.log
-                st.session_state['cleaned'] = True
-                st.session_state['cleaning_completed_at'] = datetime.now()
-                st.session_state['cleaning_duration'] = (cleaner.end_timestamp - cleaner.start_timestamp).total_seconds()
-                
-                st.success("Pipeline executed successfully!")
+                show_success_message(
+                    get_contextual_message("cleaning_success", records_processed=len(raw_df))
+                )
                 # Rerun to update UI with new cleaned state
                 st.rerun()
             except Exception as e:
-                st.error(f"An error occurred during cleaning: {e}")
+                show_error_message("Data cleaning failed", str(e))
             
     with col_log:
         if st.session_state.get('cleaned'):
@@ -534,22 +662,25 @@ with tab1:
 
 
 with tab2:
+    show_tutorial_step(4)
+    
     if st.session_state.get('cleaned'):
         clean_df = st.session_state['clean_df']
         
-        st.subheader("Member Insights")
+        st.subheader("📈 Member Insights & Analytics")
+        st.caption("Explore your cleaned data with interactive visualizations")
         
         # Show which data state is being visualized
-        st.info("📊 Viewing analytics for **cleaned data**. Toggle to 'Raw Data' in the sidebar to compare.")
+        st.info("📊 Viewing analytics for **cleaned data**. Toggle to 'Raw Data' in the sidebar to compare quality before cleaning.")
         
         # Role Filter
-        st.markdown("### Filters")
+        st.markdown("### 🔍 Filters")
         available_roles = clean_df['Role'].unique().tolist()
         selected_roles = st.multiselect(
             "Filter by Role:",
             options=available_roles,
             default=available_roles,
-            help="Select one or more roles to filter the dashboard data"
+            help="🎯 Select one or more member roles to focus your analysis on specific segments"
         )
         
         # Apply filter
@@ -557,7 +688,12 @@ with tab2:
             filtered_df = clean_df[clean_df['Role'].isin(selected_roles)]
         else:
             filtered_df = clean_df
-            st.warning("⚠️ No roles selected. Showing all data.")
+            show_empty_state(
+                icon=MESSAGES["no_filters_selected"]["icon"],
+                title=MESSAGES["no_filters_selected"]["title"],
+                message=MESSAGES["no_filters_selected"]["message"]
+            )
+            st.stop()
         
         st.divider()
         
@@ -571,25 +707,25 @@ with tab2:
         row1_col1, row1_col2 = st.columns(2)
         
         with row1_col1:
-            with st.spinner('📊 Loading attendance trend...'):
+            with show_loading_message(get_contextual_message("rendering_charts")):
                 fig_trend = plot_attendance_trend(filtered_df, data_state=data_state)
                 st.plotly_chart(fig_trend, use_container_width=True, config=export_config)
-            st.caption("💡 **Tip:** Click the camera icon in the chart to export as PNG. Hover over data points for detailed information.")
+            st.caption("💡 **Tip:** Click the camera icon 📸 to export as PNG. Hover over data points for detailed information.")
             
         with row1_col2:
-            with st.spinner('📊 Loading attendance histogram...'):
+            with show_loading_message(get_contextual_message("rendering_charts")):
                 fig_hist = plot_attendance_histogram(filtered_df, data_state=data_state)
                 st.plotly_chart(fig_hist, use_container_width=True, config=export_config)
-            st.caption("💡 **Tip:** Statistical markers show mean (red dashed) and median (green dotted) values.")
+            st.caption("💡 **Tip:** Red dashed line = mean attendance, green dotted line = median. Use these to identify outliers.")
         
         st.divider()
         
         # Row 2: Role Distribution
-        st.subheader("Demographics")
-        with st.spinner('📊 Loading role distribution...'):
+        st.subheader("👥 Demographics")
+        with show_loading_message(get_contextual_message("rendering_charts")):
             fig_role = plot_role_distribution(filtered_df, data_state=data_state)
             st.plotly_chart(fig_role, use_container_width=True, config=export_config)
-        st.caption("💡 **Tip:** Pie chart shows both counts and percentages. Click legend items to filter specific roles.")
+        st.caption("💡 **Tip:** Click legend items to show/hide specific roles. Double-click to isolate a single role.")
         
         # Before/After Comparison Section
         if st.session_state.get('cleaned'):
@@ -647,7 +783,26 @@ with tab2:
                                       use_container_width=True, config=export_config, key=f"{state_label}_role_toggle")
         
     else:
-        st.warning("⚠️ Please clean the data in the 'Data Cleaning Ops' tab to generate insights.")
+        show_empty_state(
+            icon=MESSAGES["no_data_cleaned"]["icon"],
+            title=MESSAGES["no_data_cleaned"]["title"],
+            message=MESSAGES["no_data_cleaned"]["message"]
+        )
+        
+        st.info("""
+        **🚀 Quick Steps to Generate Analytics:**
+        
+        1. Go to the **"🧹 Data Cleaning Ops"** tab above
+        2. Configure which cleaning steps you want to apply (or leave defaults)
+        3. Click the **"🚀 Run Cleaning Algorithms"** button
+        4. Return here to see your interactive charts and insights!
+        
+        **📊 What you'll see after cleaning:**
+        - Time-series attendance trends
+        - Distribution analysis histograms
+        - Member demographics pie charts
+        - Before/after comparison views
+        """)
 
 with tab3:
     st.subheader(f"{state_emoji} {state_label} Data Inspector")
