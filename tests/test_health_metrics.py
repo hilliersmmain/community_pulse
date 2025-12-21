@@ -128,22 +128,22 @@ class TestDataHealthMetrics:
         """Test email validation logic."""
         metrics = DataHealthMetrics(perfect_data)
         
-        assert metrics._is_valid_email('test@example.com') == True
-        assert metrics._is_valid_email('invalid-email') == False
-        assert metrics._is_valid_email('test at example.com') == False
-        assert metrics._is_valid_email(np.nan) == False
-        assert metrics._is_valid_email('') == False
+        assert metrics._is_valid_email('test@example.com') is True
+        assert metrics._is_valid_email('invalid-email') is False
+        assert metrics._is_valid_email('test at example.com') is False
+        assert metrics._is_valid_email(np.nan) is False
+        assert metrics._is_valid_email('') is False
     
     def test_is_valid_name(self, perfect_data):
         """Test name validation logic."""
         metrics = DataHealthMetrics(perfect_data)
         
-        assert metrics._is_valid_name('John Doe') == True
-        assert metrics._is_valid_name("O'Brien") == True
-        assert metrics._is_valid_name('Mary-Jane') == True
-        assert metrics._is_valid_name('123invalid') == False
-        assert metrics._is_valid_name(np.nan) == False
-        assert metrics._is_valid_name('') == False
+        assert metrics._is_valid_name('John Doe') is True
+        assert metrics._is_valid_name("O'Brien") is True
+        assert metrics._is_valid_name('Mary-Jane') is True
+        assert metrics._is_valid_name('123invalid') is False
+        assert metrics._is_valid_name(np.nan) is False
+        assert metrics._is_valid_name('') is False
     
     def test_count_valid_dates(self, perfect_data):
         """Test date validation logic."""

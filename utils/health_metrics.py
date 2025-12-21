@@ -8,7 +8,7 @@ completeness, duplicates, and formatting consistency.
 
 import pandas as pd
 import re
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Any
 from datetime import datetime
 
 
@@ -135,7 +135,7 @@ class DataHealthMetrics:
         
         name_str = str(name).strip()
         # Check for basic name validity (letters, spaces, hyphens, apostrophes)
-        pattern = r'^[a-zA-Z\s\-\'\.]+$'
+        pattern = r'^[a-zA-Z\s\'.-]+$'
         return bool(re.match(pattern, name_str)) and len(name_str) > 0
     
     def _count_valid_dates(self, column: str) -> int:
@@ -191,7 +191,7 @@ class DataHealthMetrics:
             'timestamp': self.timestamp
         }
     
-    def get_detailed_metrics(self) -> Dict[str, any]:
+    def get_detailed_metrics(self) -> Dict[str, Any]:
         """
         Get detailed metrics including counts and percentages.
         

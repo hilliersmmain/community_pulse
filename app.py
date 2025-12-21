@@ -111,14 +111,14 @@ with col2:
     col2.metric(
         "Duplicate Records", 
         metrics['duplicate_records'],
-        delta=f"-{metrics['duplicate_records']}" if metrics['duplicate_records'] > 0 else "0",
+        delta=f"-{metrics['duplicate_records']}" if metrics['duplicate_records'] > 0 else None,
         delta_color="inverse",
         help="Number of duplicate records detected in the dataset"
     )
     col2.metric(
         "Missing Values",
         metrics['null_cells'],
-        delta=f"-{metrics['null_cells']}" if metrics['null_cells'] > 0 else "0",
+        delta=f"-{metrics['null_cells']}" if metrics['null_cells'] > 0 else None,
         delta_color="inverse",
         help="Total number of empty or null cells across all columns"
     )
@@ -192,10 +192,11 @@ if st.session_state.get('cleaned'):
             raw_metrics['duplicate_records'],
             help="Duplicate records before cleaning"
         )
+        delta_dup = clean_metrics['duplicate_records'] - raw_metrics['duplicate_records']
         st.metric(
             "After",
             clean_metrics['duplicate_records'],
-            delta=f"-{raw_metrics['duplicate_records'] - clean_metrics['duplicate_records']}",
+            delta=f"{delta_dup}" if delta_dup != 0 else None,
             delta_color="inverse",
             help="Duplicate records after cleaning"
         )
@@ -207,10 +208,11 @@ if st.session_state.get('cleaned'):
             raw_metrics['null_cells'],
             help="Missing values before cleaning"
         )
+        delta_miss = clean_metrics['null_cells'] - raw_metrics['null_cells']
         st.metric(
             "After",
             clean_metrics['null_cells'],
-            delta=f"-{raw_metrics['null_cells'] - clean_metrics['null_cells']}",
+            delta=f"{delta_miss}" if delta_miss != 0 else None,
             delta_color="inverse",
             help="Missing values after cleaning"
         )
@@ -253,6 +255,7 @@ with tab1:
                 st.session_state['cleaning_duration'] = (cleaner.end_timestamp - cleaner.start_timestamp).total_seconds()
                 
                 st.success("Pipeline executed successfully!")
+                # Rerun to update UI with new cleaned state
                 st.rerun()
             except Exception as e:
                 st.error(f"An error occurred during cleaning: {e}")
