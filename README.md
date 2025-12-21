@@ -8,6 +8,8 @@
 
 Community Pulse is a demonstration of pure Python data engineering and dashboarding. It takes simulated "dirty" CRM data—riddled with duplicates, typos, and missing values—and passes it through an automated cleaning pipeline to power a live interactive dashboard.
 
+Developed using AI-assisted workflows with GitHub Copilot and Google Antigravity, reflecting modern AI-driven development practices.
+
 ## 🎯 What It Does
 
 1.  **Generates Entropy:** Creates a highly realistic "messy" dataset (simulating a nonprofit's exported CSV).
@@ -34,7 +36,7 @@ Community Pulse is a demonstration of pure Python data engineering and dashboard
 
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/community_pulse.git
+    git clone https://github.com/hilliersmmain/community_pulse.git
     cd community_pulse
     ```
 2.  Install dependencies:

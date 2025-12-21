@@ -1,5 +1,6 @@
-streamlit
-pandas
-plotly
-numpy
-faker
+streamlit>=1.28.0
+pandas>=2.0.0
+plotly>=5.18.0
+numpy>=1.24.0
+faker>=19.0.0
+pytest>=7.4.0

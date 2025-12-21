@@ -85,23 +85,54 @@ with tab1:
             new_len = len(st.session_state['clean_df'])
             c1.metric("Records Removed", original_len - new_len)
             c2.metric("Data Health Score", "100%", delta="24%")
+            
+            # CSV Download Button
+            st.divider()
+            csv_data = st.session_state['clean_df'].to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="📥 Download Cleaned Data (CSV)",
+                data=csv_data,
+                file_name="cleaned_community_data.csv",
+                mime="text/csv",
+                type="primary"
+            )
 
 with tab2:
     if st.session_state.get('cleaned'):
         clean_df = st.session_state['clean_df']
         
         st.subheader("Member Insights")
+        
+        # Role Filter
+        st.markdown("### Filters")
+        available_roles = clean_df['Role'].unique().tolist()
+        selected_roles = st.multiselect(
+            "Filter by Role:",
+            options=available_roles,
+            default=available_roles,
+            help="Select one or more roles to filter the dashboard data"
+        )
+        
+        # Apply filter
+        if selected_roles:
+            filtered_df = clean_df[clean_df['Role'].isin(selected_roles)]
+        else:
+            filtered_df = clean_df
+            st.warning("⚠️ No roles selected. Showing all data.")
+        
+        st.divider()
         row1_col1, row1_col2 = st.columns(2)
         
+        
         with row1_col1:
-            st.plotly_chart(plot_attendance_trend(clean_df), use_container_width=True)
+            st.plotly_chart(plot_attendance_trend(filtered_df), use_container_width=True)
             st.caption("*Prediction: Attendance is projected to increase by 12% next month based on 3-month MA.*")
             
         with row1_col2:
-            st.plotly_chart(plot_attendance_histogram(clean_df), use_container_width=True)
+            st.plotly_chart(plot_attendance_histogram(filtered_df), use_container_width=True)
             
         st.subheader("Demographics")
-        st.plotly_chart(plot_role_distribution(clean_df), use_container_width=True)
+        st.plotly_chart(plot_role_distribution(filtered_df), use_container_width=True)
         
     else:
         st.warning("⚠️ Please clean the data in the 'Data Cleaning Ops' tab to generate insights.")
