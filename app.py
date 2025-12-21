@@ -140,7 +140,10 @@ if st.sidebar.button("🔄 Generate New Data", type="primary", help="Create fres
             st.session_state['data_loaded_at'] = datetime.now()
             st.rerun()
         except Exception as e:
-            show_error_message("Failed to generate data", str(e))
+            show_error_message(
+                "Unable to generate sample data. Please try again with different settings.",
+                str(e)
+            )
 
 st.sidebar.divider()
 
@@ -616,7 +619,10 @@ with tab1:
                 # Rerun to update UI with new cleaned state
                 st.rerun()
             except Exception as e:
-                show_error_message("Data cleaning failed", str(e))
+                show_error_message(
+                    "Data cleaning operation failed. Try selecting different cleaning steps or regenerating your data.",
+                    str(e)
+                )
             
     with col_log:
         if st.session_state.get('cleaned'):

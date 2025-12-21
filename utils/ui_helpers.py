@@ -398,9 +398,11 @@ def get_contextual_message(key: str, **kwargs) -> str:
         **kwargs: Template variables
         
     Returns:
-        Formatted message string
+        Formatted message string, or empty string if key not found
     """
     template = MESSAGES.get(key, "")
     if isinstance(template, str):
         return template.format(**kwargs)
-    return template
+    # For dictionary templates (empty states), return empty string
+    # These are accessed directly via MESSAGES[key]
+    return ""
