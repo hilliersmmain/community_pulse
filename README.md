@@ -394,7 +394,7 @@ Contributions welcome! See [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for guideli
 - **[DOCUMENTATION.md](./docs/DOCUMENTATION.md)** — Detailed technical reference
 - **[CONTRIBUTING.md](./docs/CONTRIBUTING.md)** — How to contribute
 - **[KPI_DEFINITIONS.md](./docs/KPI_DEFINITIONS.md)** — KPI reference
-
+- **[SOP_DATA_CLEANING.md](./docs/SOP_DATA_CLEANING.md)** — Data cleaning standard operating procedures
 ---
 
 ## 📜 License
