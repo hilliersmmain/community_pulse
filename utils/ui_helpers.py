@@ -274,17 +274,17 @@ def show_whats_new():
         *Released: December 2025*
         
         **New Features:**
-        - 👋 **Welcome Modal**: First-time user onboarding experience
-        - 📭 **Empty States**: Helpful guidance when no data is available
-        - 💡 **Enhanced Tooltips**: Comprehensive help for all features
-        - 🎓 **Tutorial Mode**: Step-by-step guided tour
-        - 📊 **Improved KPIs**: More context and clearer metrics
+        - **Welcome Modal**: First-time user onboarding experience
+        - **Empty States**: Helpful guidance when no data is available
+        - **Enhanced Tooltips**: Comprehensive help for all features
+        - **Tutorial Mode**: Step-by-step guided tour
+        - **Improved KPIs**: More context and clearer metrics
         
         **Improvements:**
-        - ✨ Refined UI copy for better clarity
-        - 🎯 Context-aware messages and prompts
-        - 🔄 Better loading and error feedback
-        - ♿ Enhanced accessibility features
+        - Refined UI copy for better clarity
+        - Context-aware messages and prompts
+        - Better loading and error feedback
+        - Enhanced accessibility features
         
         **Bug Fixes:**
         - Fixed tooltip display issues
@@ -342,7 +342,7 @@ def show_error_message(message: str, details: Optional[str] = None):
     """
     st.error(f"{message}")
     if details:
-        with st.expander("🔍 Error Details"):
+        with st.expander("Error Details"):
             st.code(details)
 
 
