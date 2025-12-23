@@ -84,6 +84,8 @@ def show_welcome_modal():
             """)
         
         with col2:
+            st.markdown("### Quick Start")
+            st.markdown("""
             1. Click **"Generate New Data"** in the sidebar
             2. Navigate to **"Data Preparation"** tab
             3. Click **"Run Cleaning Algorithms"**
@@ -91,6 +93,8 @@ def show_welcome_modal():
             """)
         
         with col3:
+            st.markdown("### Pro Tips")
+            st.markdown("""
             - Hover over **info icons** for help
             - Toggle between **raw** and **cleaned** views
             - Enable **Tutorial Mode** for step-by-step guidance
