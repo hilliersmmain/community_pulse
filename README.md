@@ -1,4 +1,4 @@
-# 📊 Community Pulse: Intelligent Data Dashboard
+# Community Pulse: Intelligent Data Dashboard
 
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.0+-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
@@ -10,7 +10,7 @@
 
 ---
 
-## 🎯 Overview
+## Overview
 
 Community Pulse is a **production-ready Streamlit dashboard** that demonstrates end-to-end data engineering excellence:
 
@@ -28,7 +28,7 @@ Community Pulse is a **production-ready Streamlit dashboard** that demonstrates 
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 ### 1. **Realistic Data Generation**
 - Generate 100–1000 member records with configurable messiness
@@ -39,11 +39,11 @@ Community Pulse is a **production-ready Streamlit dashboard** that demonstrates 
 ### 2. **Automated Data Cleaning Pipeline**
 ```python
 Configurable steps:
-✓ Standardize Names (john doe → John Doe)
-✓ Fix Email Formats (user at domain.com → user@domain.com)
-✓ Remove Duplicates (email + name matching)
-✓ Clean Dates (normalize to YYYY-MM-DD)
-✓ Handle Missing Values (fill attendance with 0)
+• Standardize Names (john doe → John Doe)
+• Fix Email Formats (user at domain.com → user@domain.com)
+• Remove Duplicates (email + name matching)
+• Clean Dates (normalize to YYYY-MM-DD)
+• Handle Missing Values (fill attendance with 0)
 ```
 
 ### 3. **Data Health Scoring**
@@ -72,7 +72,7 @@ Real-time metrics on a 0–100% scale:
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 ```bash
@@ -116,14 +116,14 @@ Python 3.9 or higher
 
 ---
 
-## 📖 Usage Guide
+## Usage Guide
 
 ### Workflow
 
 **Step 1: Generate Sample Data**
 1. In the left sidebar, adjust "Number of Records" (100–1000)
 2. Select "Messiness Level" (low, medium, or high)
-3. Click **"🔄 Generate New Data"**
+3. Click **"Generate New Data"**
 
 **Step 2: Configure Cleaning Pipeline**
 1. Click **"Configure Cleaning Steps"** in the sidebar
@@ -131,12 +131,12 @@ Python 3.9 or higher
 3. Or use defaults (all steps enabled)
 
 **Step 3: Run Cleaning**
-1. Navigate to **"🧹 Data Cleaning Ops"** tab
-2. Click **"🚀 Run Cleaning Algorithms"**
+1. Navigate to **"Data Cleaning Ops"** tab
+2. Click **"Run Cleaning Algorithms"**
 3. Monitor execution log and cleaning summary
 
 **Step 4: Analyze Results**
-1. Go to **"📈 Analytics Dashboard"** tab
+1. Go to **"Analytics Dashboard"** tab
 2. Filter by member roles to focus analysis
 3. View interactive charts with detailed tooltips
 4. Compare raw vs. cleaned data side-by-side
@@ -156,7 +156,7 @@ This creates high-quality visualizations in the `demo_outputs/` directory.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 community_pulse/
@@ -190,7 +190,7 @@ community_pulse/
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Full test coverage with pytest (66 tests):
 
@@ -208,11 +208,11 @@ pytest tests/test_cleaner.py -v
 python verify_setup.py
 ```
 
-**Test Results:** ✅ **66/66 tests passing**
+**Test Results:** **66/66 tests passing**
 
 ---
 
-## 🛠 Technology Stack
+## Technology Stack
 
 | Component | Technology | Purpose |
 |-----------|-----------|----------|
@@ -225,7 +225,7 @@ python verify_setup.py
 
 ---
 
-## 💡 How It Works
+## How It Works
 
 ### Data Generation Process
 
@@ -274,11 +274,11 @@ Formatting    = (Valid emails + dates + names) / Total cells × 100
 
 ---
 
-## 📊 Example Results
+## Example Results
 
 ### Before Cleaning
 ```
-📊 Raw Data Metrics:
+Raw Data Metrics:
   • Total Records: 500
   • Duplicate Records: 50 (10%)
   • Missing Values: 23
@@ -287,7 +287,7 @@ Formatting    = (Valid emails + dates + names) / Total cells × 100
 
 ### After Cleaning
 ```
-✨ Cleaned Data Metrics:
+Cleaned Data Metrics:
   • Total Records: 450 (50 duplicates removed)
   • Duplicate Records: 0
   • Missing Values: 0
@@ -296,7 +296,7 @@ Formatting    = (Valid emails + dates + names) / Total cells × 100
 
 ---
 
-## 🚢 Deployment
+## Deployment
 
 ### Option 1: Streamlit Cloud (Recommended)
 
@@ -336,33 +336,33 @@ sudo systemctl start community-pulse
 
 ---
 
-## 🎓 Learning & Portfolio Value
+## Learning & Portfolio Value
 
 This project demonstrates:
 
-✅ **Data Engineering**
+**Data Engineering**
 - Data generation with realistic quality issues
 - Multi-step cleaning pipelines
 - Comprehensive error handling
 
-✅ **Data Analysis**
+**Data Analysis**
 - Health scoring algorithms
 - Statistical analysis (mean, median, std dev)
 - Trend detection (linear regression)
 
-✅ **Frontend & UX**
+**Frontend & UX**
 - Responsive Streamlit design
 - Interactive Plotly visualizations
 - Real-time metric updates
 - Modal dialogs and form validation
 
-✅ **Software Engineering**
+**Software Engineering**
 - Modular code architecture
-- 59 passing unit tests
+- 66 passing unit tests
 - Type hints and docstrings
 - Comprehensive documentation
 
-✅ **Production Readiness**
+**Production Readiness**
 - Error handling and recovery
 - Session state management
 - Configuration flexibility
@@ -370,7 +370,7 @@ This project demonstrates:
 
 ---
 
-## 📝 Contributing
+## Contributing
 
 Contributions welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
@@ -384,7 +384,7 @@ Contributions welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
 ---
 
-## 📄 Documentation
+## Documentation
 
 - **[DOCUMENTATION.md](./docs/DOCUMENTATION.md)** — Detailed technical reference
 - **[CONTRIBUTING.md](./CONTRIBUTING.md)** — How to contribute
@@ -392,13 +392,13 @@ Contributions welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
 ---
 
-## 📜 License
+## License
 
 MIT License - see [LICENSE](./LICENSE) for details.
 
 ---
 
-## 👤 Author
+## Author
 
 **Samuel M. Hillier**
 - GitHub: [@hilliersmmain](https://github.com/hilliersmmain)
@@ -406,7 +406,7 @@ MIT License - see [LICENSE](./LICENSE) for details.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 Built with:
 - [Streamlit](https://streamlit.io) — App framework
@@ -416,12 +416,12 @@ Built with:
 
 ---
 
-## 📞 Support
+## Support
 
-- 📖 Check [DOCUMENTATION.md](./docs/DOCUMENTATION.md)
-- 🐛 Report issues on [GitHub Issues](https://github.com/hilliersmmain/community_pulse/issues)
-- 💡 Discuss ideas in [GitHub Discussions](https://github.com/hilliersmmain/community_pulse/discussions)
+- Check [DOCUMENTATION.md](./docs/DOCUMENTATION.md)
+- Report issues on [GitHub Issues](https://github.com/hilliersmmain/community_pulse/issues)
+- Discuss ideas in [GitHub Discussions](https://github.com/hilliersmmain/community_pulse/discussions)
 
 ---
 
-**⭐ If this project helped you, please consider starring it!**
+**If this project helped you, please consider starring it!**
