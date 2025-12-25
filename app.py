@@ -62,14 +62,8 @@ st.markdown("""
         font-weight: 500;
     }
     
-    /* Sidebar styling */
-    [data-testid="stSidebar"] {
-        /* Removed hardcoded background-color and border for dark mode compatibility */
-    }
-    
     /* Card/Widget styling */
     div.css-1r6slb0, div.stMetric {
-        /* Removed hardcoded background-color and border for dark mode compatibility */
         padding: 1rem;
         border-radius: 8px;
     }
@@ -122,9 +116,6 @@ show_whats_new()
 
 # --- SIDEBAR Controls ---
 st.sidebar.header("Data Controls")
-
-# Tutorial and help buttons removed as per requirement
-# Keeping only "Help & Guide" expander at bottom of sidebar
 
 DATA_PATH = "data/messy_club_data.csv"
 
