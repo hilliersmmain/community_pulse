@@ -123,25 +123,8 @@ show_whats_new()
 # --- SIDEBAR Controls ---
 st.sidebar.header("Data Controls")
 
-# Add tutorial mode toggle
-tutorial_col1, tutorial_col2 = st.sidebar.columns([3, 1])
-with tutorial_col1:
-    if st.sidebar.checkbox("Tutorial Mode", value=st.session_state.get('tutorial_mode', False), help="Enable step-by-step guided tour"):
-        st.session_state['tutorial_mode'] = True
-        st.session_state['tutorial_step'] = 0
-    else:
-        if st.session_state.get('tutorial_mode', False):
-            st.session_state['tutorial_mode'] = False
-with tutorial_col2:
-    if st.sidebar.button("What's New"):
-        st.session_state['show_whats_new'] = not st.session_state.get('show_whats_new', False)
-        st.rerun()
-    if st.sidebar.button("Help"):
-        st.session_state['show_welcome'] = True
-        st.rerun()
-
-# Show tutorial if active
-show_tutorial_step(0)
+# Tutorial and help buttons removed as per requirement
+# Keeping only "Help & Guide" expander at bottom of sidebar
 
 DATA_PATH = "data/messy_club_data.csv"
 
