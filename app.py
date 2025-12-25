@@ -109,7 +109,7 @@ if st.session_state.get('show_welcome', False):
 # Title & Description
 st.title("Community Pulse Dashboard")
 st.markdown("""
-<div style="margin-bottom: 2rem; color: #555;">
+<div style="margin-bottom: 2rem;">
     <p style="font-size: 1.1rem; line-height: 1.6;">
         Data quality management and member analytics platform. 
         Transform raw data into actionable insights with automated cleaning pipelines.
