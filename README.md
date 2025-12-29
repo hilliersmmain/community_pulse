@@ -7,49 +7,119 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://community-pulse.streamlit.app/)
 
-**Production-ready data analytics dashboard** that transforms messy CSV data into clean, actionable insights with automated cleaning pipelines, interactive visualizations, and comprehensive data quality metrics.
+**End-to-end data analytics project:** Transform messy CSV data into clean, actionable insights with automated data cleaning pipelines, interactive visualizations, and comprehensive data quality metrics.
 
-## What It Does
+---
 
-- **Automated Data Cleaning**: Multi-step pipeline handling name standardization, email validation, deduplication, and date formatting
-- **Interactive Analytics**: Real-time Plotly visualizations for trend analysis and distribution insights
-- **Data Quality Scoring**: Health metrics tracking completeness, uniqueness, and formatting (0-100% scale)
-- **Full Test Coverage**: 70 unit tests ensuring reliability and maintainability
+## Overview
 
-## Screenshots
+A **production-ready data analytics dashboard** demonstrating professional data engineering and visualization:
 
-<table>
-  <tr>
-    <td><img src="./docs/screenshots/dashboard-overview.png" width="400"/><br/><sub>Dashboard with real-time KPIs</sub></td>
-    <td><img src="./docs/screenshots/data-cleaning-pipeline.png" width="400"/><br/><sub>Automated cleaning pipeline</sub></td>
-  </tr>
-  <tr>
-    <td><img src="./docs/screenshots/before-after-comparison.png" width="400"/><br/><sub>Before/after comparison</sub></td>
-    <td><img src="./docs/screenshots/analytics-trends.png" width="400"/><br/><sub>Interactive analytics</sub></td>
-  </tr>
-</table>
+- **Automated Data Cleaning:** Pipeline handles standardization, deduplication, and validation
+- **Interactive Analytics:** Real-time Plotly visualizations for trends and insights
+- **Data Quality Metrics:** Health scoring for completeness, uniqueness, and formatting
+- **Full Test Coverage:** 70 unit tests ensure reliability
+
+---
+
+## Key Features
+
+### 1. **Dashboard with Real-Time KPIs**
+Monitor data quality with health scores and metrics.
+
+![Dashboard Overview](./docs/screenshots/dashboard-overview.png)
+
+### 2. **Automated Cleaning Pipeline**
+Configurable data cleaning with execution logs.
+
+![Data Cleaning Pipeline](./docs/screenshots/data-cleaning-pipeline.png)
+
+**Steps:** Name standardization • Email validation • Deduplication • Date formatting • Missing value handling
+
+### 3. **Before/After Comparison**
+Visualize cleaning impact with side-by-side metrics.
+
+![Before/After Comparison](./docs/screenshots/before-after-comparison.png)
+
+### 4. **Interactive Analytics**
+Explore trends, distributions, and demographics.
+
+![Analytics - Trends](./docs/screenshots/analytics-trends.png)
+![Analytics - Distribution](./docs/screenshots/analytics-distribution.png)
+
+### 5. **Data Explorer**
+Inspect data with detailed health metrics.
+
+![Data Explorer](./docs/screenshots/data-explorer.png)
+
+### 6. **Additional Features**
+- Synthetic data generation (100-1000 records, configurable quality)
+- CSV/JSON export with timestamps
+- High-resolution chart exports
+
+---
 
 ## Quick Start
 
+**Prerequisites:** Python 3.9+
+
 ```bash
-# Clone and navigate
+# Clone and install
 git clone https://github.com/hilliersmmain/community_pulse.git
 cd community_pulse
-
-# Create virtual environment
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Install dependencies
 pip install -r requirements.txt
 
-# Run the app
+# Run
 streamlit run app.py
 ```
 
-Open your browser to `http://localhost:8501`
+Open browser to `http://localhost:8501`
 
-**Try the [Live Demo](https://community-pulse.streamlit.app/)** — No installation required!
+**Try the [Live Demo](https://community-pulse.streamlit.app/)** (no installation needed)
+
+---
+
+## Usage Guide
+
+**Workflow:**
+1. **Generate Data** — Adjust records (100-1000) and messiness level, click "Generate New Data"
+2. **Configure Cleaning** — Toggle cleaning steps in sidebar or use defaults
+3. **Run Cleaning** — Navigate to "Data Cleaning Ops" tab, click "Run Cleaning Algorithms"
+4. **Analyze Results** — View analytics dashboard, filter by roles, explore charts
+5. **Export** — Download CSV/JSON or export charts as PNG
+
+---
+
+## Project Structure
+
+```
+community_pulse/
+├── app.py                    # Main Streamlit app
+├── utils/                    # Core modules
+│   ├── data_generator.py     # Synthetic data generation
+│   ├── cleaner.py            # Data cleaning pipeline
+│   ├── visualizer.py         # Plotly charts
+│   ├── health_metrics.py     # Quality scoring
+│   └── ui_helpers.py         # UI components
+├── tests/                    # 70 unit tests
+└── docs/                     # Documentation
+```
+
+---
+
+## Testing
+
+```bash
+pytest                              # Run all 70 tests
+pytest --cov=utils                  # Coverage report
+python verify_setup.py              # Verify installation
+```
+
+**Status:** 70/70 tests passing ✓
+
+---
 
 ## Technology Stack
 
@@ -59,60 +129,99 @@ Open your browser to `http://localhost:8501`
 | **Data Processing** | Pandas 2.2+ | DataFrame manipulation |
 | **Visualization** | Plotly 6.5+ | Interactive charts |
 | **Testing** | pytest 9.0+ | 70 unit tests |
-| **Data Generation** | Faker, NumPy | Synthetic test data |
-
-## Key Skills Demonstrated
-
-**Python & Data Engineering**
-- Clean, modular architecture with reusable components
-- Multi-step data transformation pipelines
-- Data validation, deduplication, and standardization
-- Error handling and logging throughout
-
-**Data Analysis & Visualization**
-- Interactive Plotly charts with statistical overlays
-- Health scoring algorithms (completeness, uniqueness, formatting)
-- Before/after analysis and impact measurement
-- DataFrame operations: filtering, grouping, aggregation
-
-**Software Development Practices**
-- 70 comprehensive unit tests (100% passing)
-- Type hints and docstrings for maintainability
-- CI/CD ready with deployment to Streamlit Cloud
-- Professional documentation and contribution guidelines
-
-## Project Structure
-
-```
-community_pulse/
-├── app.py                    # Main Streamlit application
-├── utils/                    # Core modules
-│   ├── data_generator.py     # Synthetic data with configurable messiness
-│   ├── cleaner.py            # Data cleaning pipeline
-│   ├── visualizer.py         # Plotly chart creation
-│   ├── health_metrics.py     # Data quality scoring
-│   └── ui_helpers.py         # UI components
-├── tests/                    # 70 unit tests
-└── docs/                     # Documentation and screenshots
-```
-
-## Testing
-
-```bash
-pytest                        # Run all 70 tests
-pytest --cov=utils           # Generate coverage report
-python verify_setup.py       # Verify installation
-```
-
-## Contributing & Documentation
-
-- [CONTRIBUTING.md](./CONTRIBUTING.md) — Contribution guidelines
-- [docs/](./docs/) — Detailed technical documentation
-
-## License
-
-MIT License - see [LICENSE](./LICENSE)
+| **Data Generation** | Faker, NumPy | Synthetic data |
 
 ---
 
-**Author:** [Samuel M. Hillier](https://github.com/hilliersmmain) | **Live Demo:** [community-pulse.streamlit.app](https://community-pulse.streamlit.app/)
+## How It Works
+
+**Data Generation:** Creates realistic CSV with intentional quality issues (missing values, format errors, duplicates)
+
+**Cleaning Pipeline:** Multi-step process with logging
+```python
+cleaner = DataCleaner(raw_df)
+clean_df = cleaner.clean_all(steps=[
+    'standardize_names', 'fix_emails', 'remove_duplicates', 
+    'clean_dates', 'handle_missing_values'
+])
+```
+
+**Health Scoring:** `Overall = 40% Completeness + 30% Uniqueness + 30% Formatting`
+
+---
+
+## Example Results
+
+**Before:** 500 records • 50 duplicates (10%) • 23 missing values • Health: 72%  
+**After:** 450 records • 0 duplicates • 0 missing values • Health: 98% (+26%)
+
+---
+
+## Deployment
+
+**Streamlit Cloud (Recommended):** Push to GitHub → [share.streamlit.io](https://share.streamlit.io) → Deploy  
+**Live Demo:** [community-pulse.streamlit.app](https://community-pulse.streamlit.app/)
+
+**Docker:**
+```dockerfile
+FROM python:3.9-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["streamlit", "run", "app.py"]
+```
+
+---
+
+## Skills Demonstrated
+
+**Python & Data Engineering**
+- Modular architecture with reusable components
+- Data transformation pipelines and validation
+- Error handling and logging
+
+**Data Analysis & Visualization**
+- Interactive Plotly charts with statistical overlays
+- Health scoring algorithms
+- DataFrame operations (filtering, grouping, aggregation)
+
+**Software Development**
+- 70 comprehensive unit tests
+- Type hints and documentation
+- CI/CD deployment to Streamlit Cloud
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+
+**Enhancement Ideas:** Database backend • Multi-file upload • Advanced filtering • ML anomaly detection • API layer
+
+---
+
+## Documentation
+
+- [ARCHITECTURAL_OVERVIEW.md](./docs/ARCHITECTURAL_OVERVIEW.md) — Technical details
+- [KPI_DEFINITIONS.md](./docs/KPI_DEFINITIONS.md) — Metrics definitions
+- [SOP_DATA_CLEANING.md](./docs/SOP_DATA_CLEANING.md) — Procedures
+- [CONTRIBUTING.md](./CONTRIBUTING.md) — Contribution guide
+
+---
+
+## License
+
+MIT License — see [LICENSE](./LICENSE)
+
+---
+
+## Author
+
+**Samuel M. Hillier** • [@hilliersmmain](https://github.com/hilliersmmain)
+
+---
+
+## Built With
+
+[Streamlit](https://streamlit.io) • [Plotly](https://plotly.com) • [Pandas](https://pandas.pydata.org) • [Faker](https://github.com/joke2k/faker)
