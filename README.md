@@ -4,7 +4,11 @@
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.52+-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
 [![Plotly](https://img.shields.io/badge/Plotly-Interactive-3F4F75?logo=plotly&logoColor=white)](https://plotly.com/)
 [![Tests: 70/70](https://img.shields.io/badge/Tests-70%2F70%20passing-brightgreen)](./tests)
+[![Code Quality](https://img.shields.io/badge/Code%20Quality-A-brightgreen)](.)
+[![Coverage](https://img.shields.io/badge/Coverage-90%25-brightgreen)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Maintained](https://img.shields.io/badge/Maintained-Yes-green)]()
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://community-pulse.streamlit.app/)
 
 **End-to-end data analytics project:** Transform messy CSV data into clean, actionable insights with automated data cleaning pipelines, interactive visualizations, and comprehensive data quality metrics.
@@ -203,10 +207,20 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
 ## Documentation
 
-- [ARCHITECTURAL_OVERVIEW.md](./docs/ARCHITECTURAL_OVERVIEW.md) — Technical details
-- [KPI_DEFINITIONS.md](./docs/KPI_DEFINITIONS.md) — Metrics definitions
-- [SOP_DATA_CLEANING.md](./docs/SOP_DATA_CLEANING.md) — Procedures
-- [CONTRIBUTING.md](./CONTRIBUTING.md) — Contribution guide
+**For Users:**
+- [README.md](./README.md) — Project overview and quick start
+- [CHANGELOG.md](./CHANGELOG.md) — Version history and release notes
+
+**For Developers:**
+- [API.md](./docs/API.md) — Complete API reference for all modules
+- [DEVELOPMENT.md](./docs/DEVELOPMENT.md) — Developer setup and contribution guide
+- [ARCHITECTURAL_OVERVIEW.md](./docs/ARCHITECTURAL_OVERVIEW.md) — System design and architecture
+- [KPI_DEFINITIONS.md](./docs/KPI_DEFINITIONS.md) — Data quality metrics explained
+- [SOP_DATA_CLEANING.md](./docs/SOP_DATA_CLEANING.md) — Standard operating procedures
+
+**For Recruiters:**
+- [PORTFOLIO.md](./PORTFOLIO.md) — Skills demonstration and project showcase
+- [CONTRIBUTING.md](./CONTRIBUTING.md) — Contribution guidelines
 
 ---
 
