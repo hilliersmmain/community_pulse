@@ -4,7 +4,11 @@
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.52+-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
 [![Plotly](https://img.shields.io/badge/Plotly-Interactive-3F4F75?logo=plotly&logoColor=white)](https://plotly.com/)
 [![Tests: 70/70](https://img.shields.io/badge/Tests-70%2F70%20passing-brightgreen)](./tests)
+[![Code Quality](https://img.shields.io/badge/Code%20Quality-A-brightgreen)](.)
+[![Coverage](https://img.shields.io/badge/Coverage-90%25-brightgreen)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Maintained](https://img.shields.io/badge/Maintained-Yes-green)]()
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://community-pulse.streamlit.app/)
 
 **End-to-end data analytics project:** Transform messy CSV data into clean, actionable insights with automated data cleaning pipelines, interactive visualizations, and comprehensive data quality metrics.

@@ -1,0 +1,97 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "community-pulse"
+version = "1.0.0"
+description = "Production-ready data analytics dashboard with automated cleaning pipelines, interactive visualizations, and comprehensive data quality metrics"
+authors = [{name = "Samuel M. Hillier"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = [
+    "data-analytics",
+    "streamlit",
+    "data-cleaning",
+    "visualization",
+    "data-quality",
+    "plotly",
+    "dashboard",
+    "data-engineering",
+    "portfolio-project"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dependencies = [
+    "streamlit>=1.52.2",
+    "pandas==2.2.2",
+    "plotly>=6.5.0",
+    "numpy==1.26.4",
+    "faker>=39.0.0",
+    "pytest>=9.0.2",
+    "python-Levenshtein>=0.26.1",
+    "kaleido>=0.2.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.0.2",
+    "pytest-cov>=4.1.0",
+    "black>=24.1.1",
+    "flake8>=7.0.0",
+    "pre-commit>=3.6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/hilliersmmain/community_pulse"
+"Live Demo" = "https://community-pulse.streamlit.app/"
+Documentation = "https://github.com/hilliersmmain/community_pulse/tree/main/docs"
+"Bug Tracker" = "https://github.com/hilliersmmain/community_pulse/issues"
+"Source Code" = "https://github.com/hilliersmmain/community_pulse"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "-v --tb=short"
+
+[tool.black]
+line-length = 120
+target-version = ['py39']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.coverage.run]
+source = ["utils", "community_pulse"]
+omit = ["*/tests/*", "*/test_*.py"]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
