@@ -3,7 +3,7 @@ __pycache__/
 data/
 .venv
 venv/
+.env
 demo_outputs/
 *.png
 !docs/screenshots/*.png
-

@@ -29,11 +29,13 @@ A **production-ready data analytics dashboard** demonstrating professional data 
 ## Key Features
 
 ### 1. **Dashboard with Real-Time KPIs**
+
 Monitor data quality with health scores and metrics.
 
 ![Dashboard Overview](./docs/screenshots/dashboard-overview.png)
 
 ### 2. **Automated Cleaning Pipeline**
+
 Configurable data cleaning with execution logs.
 
 ![Data Cleaning Pipeline](./docs/screenshots/data-cleaning-pipeline.png)
@@ -41,22 +43,26 @@ Configurable data cleaning with execution logs.
 **Steps:** Name standardization • Email validation • Deduplication • Date formatting • Missing value handling
 
 ### 3. **Before/After Comparison**
+
 Visualize cleaning impact with side-by-side metrics.
 
 ![Before/After Comparison](./docs/screenshots/before-after-comparison.png)
 
 ### 4. **Interactive Analytics**
+
 Explore trends, distributions, and demographics.
 
 ![Analytics - Trends](./docs/screenshots/analytics-trends.png)
 ![Analytics - Distribution](./docs/screenshots/analytics-distribution.png)
 
 ### 5. **Data Explorer**
+
 Inspect data with detailed health metrics.
 
 ![Data Explorer](./docs/screenshots/data-explorer.png)
 
 ### 6. **Additional Features**
+
 - Synthetic data generation (100-1000 records, configurable quality)
 - CSV/JSON export with timestamps
 - High-resolution chart exports
@@ -88,6 +94,7 @@ Open browser to `http://localhost:8501`
 ## Usage Guide
 
 **Workflow:**
+
 1. **Generate Data** — Adjust records (100-1000) and messiness level, click "Generate New Data"
 2. **Configure Cleaning** — Toggle cleaning steps in sidebar or use defaults
 3. **Run Cleaning** — Navigate to "Data Cleaning Ops" tab, click "Run Cleaning Algorithms"
@@ -127,13 +134,13 @@ python verify_setup.py              # Verify installation
 
 ## Technology Stack
 
-| Component | Technology | Purpose |
-|-----------|-----------|----------|
-| **Frontend** | Streamlit 1.52+ | Interactive web UI |
-| **Data Processing** | Pandas 2.2+ | DataFrame manipulation |
-| **Visualization** | Plotly 6.5+ | Interactive charts |
-| **Testing** | pytest 9.0+ | 70 unit tests |
-| **Data Generation** | Faker, NumPy | Synthetic data |
+| Component           | Technology      | Purpose                |
+| ------------------- | --------------- | ---------------------- |
+| **Frontend**        | Streamlit 1.52+ | Interactive web UI     |
+| **Data Processing** | Pandas 2.2+     | DataFrame manipulation |
+| **Visualization**   | Plotly 6.5+     | Interactive charts     |
+| **Testing**         | pytest 9.0+     | 70 unit tests          |
+| **Data Generation** | Faker, NumPy    | Synthetic data         |
 
 ---
 
@@ -142,10 +149,11 @@ python verify_setup.py              # Verify installation
 **Data Generation:** Creates realistic CSV with intentional quality issues (missing values, format errors, duplicates)
 
 **Cleaning Pipeline:** Multi-step process with logging
+
 ```python
 cleaner = DataCleaner(raw_df)
 clean_df = cleaner.clean_all(steps=[
-    'standardize_names', 'fix_emails', 'remove_duplicates', 
+    'standardize_names', 'fix_emails', 'remove_duplicates',
     'clean_dates', 'handle_missing_values'
 ])
 ```
@@ -167,6 +175,7 @@ clean_df = cleaner.clean_all(steps=[
 **Live Demo:** [community-pulse.streamlit.app](https://community-pulse.streamlit.app/)
 
 **Docker:**
+
 ```dockerfile
 FROM python:3.9-slim
 WORKDIR /app
@@ -181,16 +190,19 @@ CMD ["streamlit", "run", "app.py"]
 ## Skills Demonstrated
 
 **Python & Data Engineering**
+
 - Modular architecture with reusable components
 - Data transformation pipelines and validation
 - Error handling and logging
 
 **Data Analysis & Visualization**
+
 - Interactive Plotly charts with statistical overlays
 - Health scoring algorithms
 - DataFrame operations (filtering, grouping, aggregation)
 
 **Software Development**
+
 - 70 comprehensive unit tests
 - Type hints and documentation
 - CI/CD deployment to Streamlit Cloud
@@ -208,18 +220,24 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 ## Documentation
 
 **For Users:**
+
 - [README.md](./README.md) — Project overview and quick start
 - [CHANGELOG.md](./CHANGELOG.md) — Version history and release notes
 
 **For Developers:**
+
 - [API.md](./docs/API.md) — Complete API reference for all modules
 - [DEVELOPMENT.md](./docs/DEVELOPMENT.md) — Developer setup and contribution guide
+- [CONFIGURATION.md](./docs/CONFIGURATION.md) — Configuration options and environment variables
+- [ERROR_HANDLING.md](./docs/ERROR_HANDLING.md) — Common errors and troubleshooting guide
 - [ARCHITECTURAL_OVERVIEW.md](./docs/ARCHITECTURAL_OVERVIEW.md) — System design and architecture
 - [KPI_DEFINITIONS.md](./docs/KPI_DEFINITIONS.md) — Data quality metrics explained
 - [SOP_DATA_CLEANING.md](./docs/SOP_DATA_CLEANING.md) — Standard operating procedures
 
 **For Recruiters:**
+
 - [PORTFOLIO.md](./PORTFOLIO.md) — Skills demonstration and project showcase
+- [GITHUB_OPTIMIZATION.md](./docs/GITHUB_OPTIMIZATION.md) — Repository optimization guide
 - [CONTRIBUTING.md](./CONTRIBUTING.md) — Contribution guidelines
 
 ---
