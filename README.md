@@ -1,19 +1,18 @@
 # Community Pulse:  Data Analytics Dashboard
 
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-3776AB? logo=python&logoColor=white)](https://www.python.org/)
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.52+-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
-[![Plotly](https://img.shields.io/badge/Plotly-Interactive-3F4F75? logo=plotly&logoColor=white)](https://plotly.com/)
+[![Plotly](https://img.shields.io/badge/Plotly-Interactive-3F4F75?logo=plotly&logoColor=white)](https://plotly.com/)
 [![Tests: 70/70](https://img.shields.io/badge/Tests-70%2F70%20passing-brightgreen)](./tests)
 [![Coverage](https://img.shields.io/badge/Coverage-90%25-brightgreen)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://community-pulse.streamlit.app/)
+[![Live Demo](https://img.shields.io/badge/%20Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://community-pulse.streamlit.app/)
 
-A production-grade data analytics platform that transforms raw, unstructured community data into actionable business intelligence.  By automating the entire data engineering lifecycle—from ingestion and cleaning to validation and visualization—it delivers real-time insights into community engagement, growth trends, and member behavior patterns.
+A production-grade data analytics platform that transforms raw, unstructured community data into actionable business intelligence.  By automating the entire data engineering lifecycle. From ingestion and cleaning to validation and visualization—it delivers real-time insights into community engagement, growth trends, and member behavior patterns.
 
 ## Why I Built This
 
-As a former biology student used to dealing with messy organic data, I realized that human community data—with its duplicates, missing fields, and chaotic growth patterns—required the same rigorous treatment as biological datasets. I built Community Pulse to prove that a robust, automated data engineering pipeline can be just as elegant as the visualizations it powers.  It's not just a dashboard; it's an attempt to bring scientific order to social chaos.
-
+As a former biology student used to dealing with messy organic data, I realized that human community data—with its duplicates, missing fields, and chaotic growth patterns—required the same rigorous treatment as biological datasets. I built Community Pulse to prove that a robust, automated data engineering pipeline can be just as elegant as the visualizations it powers. 
 ---
 
 ## [Try the Live Demo →](https://community-pulse.streamlit.app/)
@@ -193,14 +192,16 @@ CMD ["streamlit", "run", "app. py"]
 
 Sam Hillier — Sophomore at UNC Charlotte bridging data science and artificial intelligence.
 
-Program: B.S. Data Science → B.S./M.S. Artificial Intelligence (Fall 2026)
+Program: B.S. Data Science → B.S in Artificial Intelligence (Fall 2026)
 Minors: Cognitive Science, AI
 Spring 2026 Coursework: Human-Centered Computing (ITIS 3130), Computer Science II (ITSC 1213), Mathematics for Computer Science (MATH 2112)
 Background: Started in Cellular/Molecular Biology at Appalachian State University (2024-2025), where AI's potential in neruoscience, sparked my transition to Data Science/Aritifical Intelligence
-Interested in AI applications in neuroscience, human-computer interaction, and building & researching the infrastructure that powers intelligent systems.
+
+Interested in AI applications in neuroscience, human-computer interaction, and building & researching the infrastructure and fundementals that powers intelligent systems from the ground up.
+
 
 ---
 
 ## License
 
-MIT License — See [LICENSE](./LICENSE) for details. 
+MIT License 
