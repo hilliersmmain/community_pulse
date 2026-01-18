@@ -50,7 +50,7 @@ Real-world data is messy. Sales teams export CRMs with duplicates. Event organiz
 | **Format Errors** | 5-10% | 0% | **-100%** |
 
 ### Code Quality Metrics
-- **Test Coverage:** 90%+ across all modules
+- **Test Coverage:** 85% across core modules
 - **Code Quality:** A-grade (Black formatting, Flake8 linting)
 - **Documentation:** Complete API docs, development guide, architecture overview
 - **Type Safety:** Comprehensive type hints for IDE support
@@ -160,7 +160,7 @@ tests/
 ├── test_visualizer.py         # Chart tests
 └── test_ui_helpers.py         # UI component tests
 
-# 70 tests, 90%+ coverage, all passing
+# 70 tests, 85% coverage, all passing
 pytest --cov=utils --cov=community_pulse
 ```
 
@@ -259,7 +259,7 @@ pytest --cov=utils --cov=community_pulse
 - **Lines of Code:** ~3,000+ (excluding tests and docs)
 - **Test Files:** 7
 - **Test Cases:** 70
-- **Test Coverage:** 90%+
+- **Test Coverage:** 85%
 - **Modules:** 6 core utilities
 - **Functions:** 30+ documented functions
 - **Classes:** 2 main classes (DataCleaner, DataHealthMetrics)
@@ -396,7 +396,7 @@ pytest --cov=utils --cov=community_pulse
 - **Advanced Pandas:** Mastered vectorized operations, chaining, and optimization
 - **Interactive Visualization:** Created production-quality Plotly charts
 - **Streamlit Development:** Built complex multi-page applications with state management
-- **Test-Driven Development:** Wrote tests first, achieved 90%+ coverage
+- **Test-Driven Development:** Wrote tests first, achieved 85% coverage
 - **CI/CD Pipelines:** Automated testing and deployment workflows
 
 ### Software Engineering
@@ -435,7 +435,7 @@ pytest --cov=utils --cov=community_pulse
 
 **Portfolio Highlights:**
 - 🚀 **Production Application:** Live demo accessible to anyone
-- 🧪 **Test Coverage:** 70 tests, 90%+ coverage, all passing
+- 🧪 **Test Coverage:** 70 tests, 85% coverage, all passing
 - 📚 **Documentation:** 15+ markdown files covering all aspects
 - 🎨 **Professional UI:** Dark/light mode, responsive design, tooltips
 - ⚡ **Performance:** Sub-second processing for 1000 records
@@ -454,7 +454,7 @@ pytest --cov=utils --cov=community_pulse
    - Comprehensive error handling and validation
 
 2. **Professional Engineering**
-   - 90%+ test coverage with meaningful tests
+   - 85% test coverage with meaningful tests
    - Complete documentation for users and developers
    - Modern Python best practices (type hints, Black, Flake8)
 

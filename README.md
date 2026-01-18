@@ -4,7 +4,7 @@
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.52+-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
 [![Plotly](https://img.shields.io/badge/Plotly-Interactive-3F4F75?logo=plotly&logoColor=white)](https://plotly.com/)
 [![Tests: 70/70](https://img.shields.io/badge/Tests-70%2F70%20passing-brightgreen)](./tests)
-[![Coverage](https://img.shields.io/badge/Coverage-90%25-brightgreen)]()
+[![Coverage](https://img.shields.io/badge/Coverage-85%25-brightgreen)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Live Demo](https://img.shields.io/badge/%20Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://community-pulse.streamlit.app/)
 
@@ -78,7 +78,7 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 # Launch the dashboard
-streamlit run app. py
+streamlit run app.py
 ```
 
 Open browser to `http://localhost:8501`
@@ -112,7 +112,7 @@ Open browser to `http://localhost:8501`
 
 ```
 community-pulse/
-├── app. py                    # Main Streamlit application (entry point)
+├── app.py                     # Main Streamlit application (entry point)
 ├── utils/                    # Core processing modules
 │   ├── data_generator.py     # Synthetic data generation with configurable noise
 │   ├── cleaner.py            # Multi-step cleaning pipeline with logging
@@ -121,7 +121,7 @@ community-pulse/
 │   └── ui_helpers.py         # Reusable UI components
 ├── tests/                    # 70 comprehensive unit tests
 ├── docs/                     # Technical documentation
-│   ├── API. md                # Module API reference
+│   ├── API.md                 # Module API reference
 │   ├── ARCHITECTURAL_OVERVIEW.md
 │   └── screenshots/          # Dashboard screenshots
 └── . github/workflows/        # CI/CD automation
@@ -139,7 +139,7 @@ python verify_setup.py    # Verify installation
 
 **Quality Metrics:**
 - 70/70 tests passing
-- 90% code coverage
+- 85% code coverage (core modules)
 - Type hints throughout
 - Comprehensive docstrings
 
@@ -162,7 +162,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . . 
 EXPOSE 8501
-CMD ["streamlit", "run", "app. py"]
+CMD ["streamlit", "run", "app.py"]
 ```
 
 ---
