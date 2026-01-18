@@ -1,13 +1,5 @@
 #!/usr/bin/env python
-"""
-Setup Verification Script
-
-This script verifies that all required dependencies are installed correctly
-and the environment is ready to run Community Pulse.
-
-Run this script after installation to ensure everything is set up properly:
-    python verify_setup.py
-"""
+"""Setup Verification Script"""
 
 import sys
 import importlib
@@ -31,16 +23,7 @@ def check_python_version() -> Tuple[bool, str]:
 
 
 def check_package(package_name: str, min_version: str = None) -> Tuple[bool, str]:
-    """
-    Check if a package is installed and optionally verify minimum version.
-    
-    Args:
-        package_name: Name of the package to check
-        min_version: Minimum required version (optional)
-    
-    Returns:
-        Tuple of (success, message)
-    """
+    """Check if a package is installed and optionally verify minimum version."""
     try:
         module = importlib.import_module(package_name)
         version = getattr(module, '__version__', 'unknown')
@@ -51,7 +34,6 @@ def check_package(package_name: str, min_version: str = None) -> Tuple[bool, str
                 if pkg_version.parse(version) < pkg_version.parse(min_version):
                     return False, f"{package_name} {version} (requires {min_version}+)"
             except Exception:
-                # If version comparison fails, just report the version
                 pass
         
         return True, f"{package_name} {version}"
@@ -60,13 +42,7 @@ def check_package(package_name: str, min_version: str = None) -> Tuple[bool, str
 
 
 def verify_dependencies() -> Dict[str, List[Tuple[str, bool, str]]]:
-    """
-    Verify all required and optional dependencies.
-    
-    Returns:
-        Dictionary with 'required' and 'optional' dependency check results
-    """
-    # Required dependencies
+    """Verify all required and optional dependencies."""
     required_packages = [
         ('streamlit', '1.52.2'),
         ('pandas', '2.2.2'),
@@ -74,12 +50,11 @@ def verify_dependencies() -> Dict[str, List[Tuple[str, bool, str]]]:
         ('numpy', '1.26.4'),
         ('faker', None),
         ('pytest', None),
-        ('Levenshtein', None),  # python-Levenshtein
+        ('Levenshtein', None),
     ]
     
-    # Optional dependencies
     optional_packages = [
-        ('kaleido', None),  # For static image export
+        ('kaleido', None),
     ]
     
     results = {
@@ -87,12 +62,10 @@ def verify_dependencies() -> Dict[str, List[Tuple[str, bool, str]]]:
         'optional': []
     }
     
-    # Check required packages
     for package_name, min_version in required_packages:
         success, message = check_package(package_name, min_version)
         results['required'].append((package_name, success, message))
     
-    # Check optional packages
     for package_name, min_version in optional_packages:
         success, message = check_package(package_name, min_version)
         results['optional'].append((package_name, success, message))

@@ -10,52 +10,7 @@ fake = Faker()
 def generate_messy_data(
     num_records: int = 500, save_path: Optional[str] = None, messiness_level: str = "medium"
 ) -> pd.DataFrame:
-    """
-    Generates a dataset with intentional 'messiness' for cleaning demonstration.
-
-    This function creates realistic member data with controlled quality issues,
-    simulating real-world data quality problems commonly found in CRM systems,
-    spreadsheets, and legacy databases.
-
-    Messiness includes:
-    - Duplicates (3-20% depending on level)
-    - Inconsistent capitalization in Names (UPPER, lower, Title Case)
-    - Invalid Email formats (e.g., "user at domain.com")
-    - Inconsistent Date formats (YYYY-MM-DD, MM/DD/YYYY, DD-MM-YYYY, "Unknown")
-    - Missing values (NaN) in various columns
-
-    Args:
-        num_records (int): Number of base records to generate. Default is 500.
-            The final dataset may be larger due to duplicates added.
-        save_path (str, optional): Path to save CSV file. If None, data is not saved.
-            Example: "data/messy_club_data.csv"
-        messiness_level (str): Controls level of data quality issues. Default is "medium".
-            - "low": 3% duplicates, 2% errors (well-maintained CRM)
-            - "medium": 10% duplicates, 5% errors (typical export)
-            - "high": 20% duplicates, 15% errors (legacy system)
-
-    Returns:
-        pd.DataFrame: Generated dataset with intentional quality issues.
-            Columns: ID, Name, Email, Join_Date, Last_Login, Event_Attendance,
-                    Role, Event_Registered, Registration_Date
-
-    Example:
-        >>> # Generate 100 records with medium messiness
-        >>> df = generate_messy_data(num_records=100, messiness_level="medium")
-        >>> print(f"Generated {len(df)} records")
-
-        >>> # Save to file
-        >>> df = generate_messy_data(
-        ...     num_records=500,
-        ...     save_path="data/sample.csv",
-        ...     messiness_level="high"
-        ... )
-
-    Note:
-        The actual number of records in the returned DataFrame will be higher
-        than num_records due to the duplicates added based on messiness_level.
-    """
-    # Set messiness parameters based on level
+    """Generates a dataset with intentional messiness for cleaning demonstration."""
     if messiness_level == "low":
         duplicate_rate = 0.03  # 3% duplicates
         email_error_rate = 0.02  # 2% invalid emails
@@ -77,15 +32,11 @@ def generate_messy_data(
 
     data = []
 
-    # Generate base data
     for _ in range(num_records):
-        # Event registration logic
         event_choices = ["Spring Gala", "Summer Camp", "Fall Fundraiser", "None"]
         event_registered = np.random.choice(event_choices, p=[0.25, 0.25, 0.25, 0.25])
 
-        # Registration date (only if registered for an event)
         if event_registered != "None" and random.random() > 0.4:
-            # 60% of registered users have a registration date
             reg_date = fake.date_between(start_date="-6m", end_date="today")
         else:
             reg_date = None
@@ -105,14 +56,10 @@ def generate_messy_data(
 
     df = pd.DataFrame(data)
 
-    # --- INTRODUCE MESSINESS ---
-
-    # 1. Duplicates
     num_duplicates = int(num_records * duplicate_rate)
     duplicates = df.sample(num_duplicates, replace=True)
     df = pd.concat([df, duplicates], ignore_index=True)
 
-    # 2. Inconsistent Names (mix of UPPER, lower, Title)
     def mess_up_name(name):
         if random.random() < name_mess_rate:
             r = random.random()
@@ -123,35 +70,29 @@ def generate_messy_data(
 
     df["Name"] = df["Name"].apply(mess_up_name)
 
-    # 3. Invalid Emails
     def mess_up_email(email):
         if random.random() < email_error_rate:
-            return email.replace("@", " at ")  # Invalid format
+            return email.replace("@", " at ")
         return email
 
     df["Email"] = df["Email"].apply(mess_up_email)
 
-    # 4. Inconsistent Date Formats & Types in 'Join_Date'
-    # Current format is datetime.date object. Convert some to strings of different formats.
     def mess_up_date(d):
         r = random.random()
         if r < date_mess_rate * 0.4:
-            return d.strftime("%m/%d/%Y")  # US format string
+            return d.strftime("%m/%d/%Y")
         if r < date_mess_rate * 0.8:
-            return d.strftime("%d-%m-%Y")  # Euro format string
+            return d.strftime("%d-%m-%Y")
         if r < date_mess_rate:
-            # Random string noise
             return "Unknown"
-        return d  # Keep as object or ISO string roughly
+        return d
 
     df["Join_Date"] = df["Join_Date"].apply(mess_up_date)
 
-    # 5. Missing Values
     cols_to_nan = ["Event_Attendance", "Last_Login"]
     for col in cols_to_nan:
         df.loc[df.sample(frac=missing_rate).index, col] = np.nan
 
-    # Shuffle dataset
     df = df.sample(frac=1).reset_index(drop=True)
 
     if save_path:
@@ -162,7 +103,6 @@ def generate_messy_data(
 
 
 if __name__ == "__main__":
-    # Create data directory if it doesn't exist
     import os
 
     if not os.path.exists("../data"):

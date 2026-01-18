@@ -10,15 +10,7 @@ DEFAULT_HISTOGRAM_BINS = 20
 
 
 def _add_export_button(fig: go.Figure) -> go.Figure:
-    """
-    Add download button configuration to figure.
-
-    Args:
-        fig: Plotly figure to enhance
-
-    Returns:
-        Enhanced figure with export options
-    """
+    """Add download button configuration to figure."""
     fig.update_layout(
         modebar_add=["toImage"],
         modebar_remove=[],
@@ -27,15 +19,7 @@ def _add_export_button(fig: go.Figure) -> go.Figure:
 
 
 def _calculate_stats(data: pd.Series) -> Dict[str, float]:
-    """
-    Calculate statistical measures for a data series.
-
-    Args:
-        data: Pandas series to analyze
-
-    Returns:
-        Dictionary with mean, median, std, min, max
-    """
+    """Calculate statistical measures for a data series."""
     return {
         "mean": float(data.mean()),
         "median": float(data.median()),
@@ -46,25 +30,13 @@ def _calculate_stats(data: pd.Series) -> Dict[str, float]:
 
 
 def plot_attendance_trend(df: pd.DataFrame, data_state: str = "cleaned") -> go.Figure:
-    """
-    Line chart of attendance over time with trend line, annotations, and rich tooltips.
-
-    Args:
-        df: DataFrame with member data
-        data_state: Label indicating if data is "raw" or "cleaned"
-
-    Returns:
-        Enhanced Plotly figure with interactivity
-    """
-    # Group by Join_Date month
+    """Line chart of attendance over time with trend line."""
     if "Join_Date" not in df.columns:
         return go.Figure()
 
-    # Ensure datetime with error handling for messy data
     temp_df = df.copy()
     temp_df["Join_Date"] = pd.to_datetime(temp_df["Join_Date"], errors="coerce")
 
-    # Remove rows with invalid dates
     temp_df = temp_df.dropna(subset=["Join_Date"])
 
     if len(temp_df) == 0:
@@ -73,13 +45,10 @@ def plot_attendance_trend(df: pd.DataFrame, data_state: str = "cleaned") -> go.F
     trend = temp_df.groupby(temp_df["Join_Date"].dt.to_period("M")).size().reset_index(name="New Members")
     trend["Join_Date"] = trend["Join_Date"].astype(str)
 
-    # Calculate statistics
     stats = _calculate_stats(trend["New Members"])
 
-    # Create figure with custom traces
     fig = go.Figure()
 
-    # Add main line with enhanced tooltips
     fig.add_trace(
         go.Scatter(
             x=trend["Join_Date"],
@@ -98,7 +67,6 @@ def plot_attendance_trend(df: pd.DataFrame, data_state: str = "cleaned") -> go.F
         )
     )
 
-    # Add trend line (linear regression)
     if len(trend) > MIN_POINTS_FOR_TREND - 1:
         x_numeric = np.arange(len(trend))
         z = np.polyfit(x_numeric, trend["New Members"], 1)
@@ -116,7 +84,6 @@ def plot_attendance_trend(df: pd.DataFrame, data_state: str = "cleaned") -> go.F
             )
         )
 
-    # Add mean line as annotation
     fig.add_hline(
         y=stats["mean"],
         line_dash="dot",
@@ -125,7 +92,6 @@ def plot_attendance_trend(df: pd.DataFrame, data_state: str = "cleaned") -> go.F
         annotation_position="right",
     )
 
-    # Update layout with enhanced styling
     fig.update_layout(
         title={
             "text": f"Membership Growth Over Time<br><sub>Data State: {data_state.title()} | "
@@ -152,23 +118,13 @@ def plot_attendance_trend(df: pd.DataFrame, data_state: str = "cleaned") -> go.F
         ],
     )
 
-    # Add export button
     fig = _add_export_button(fig)
 
     return fig
 
 
 def plot_role_distribution(df: pd.DataFrame, data_state: str = "cleaned") -> go.Figure:
-    """
-    Pie chart of member roles with absolute counts and percentages.
-
-    Args:
-        df: DataFrame with member data
-        data_state: Label indicating if data is "raw" or "cleaned"
-
-    Returns:
-        Enhanced Plotly figure with counts and percentages
-    """
+    """Pie chart of member roles with counts and percentages."""
     if "Role" not in df.columns:
         return go.Figure()
 
@@ -177,7 +133,6 @@ def plot_role_distribution(df: pd.DataFrame, data_state: str = "cleaned") -> go.
     total = counts["Count"].sum()
     counts["Percentage"] = (counts["Count"] / total * 100).round(1)
 
-    # Create enhanced pie chart
     fig = go.Figure(
         data=[
             go.Pie(
@@ -193,7 +148,6 @@ def plot_role_distribution(df: pd.DataFrame, data_state: str = "cleaned") -> go.
         ]
     )
 
-    # Update layout
     fig.update_layout(
         title={
             "text": f"Member Role Distribution<br><sub>Data State: {data_state.title()} | Total Members: {total}</sub>",
@@ -215,30 +169,18 @@ def plot_role_distribution(df: pd.DataFrame, data_state: str = "cleaned") -> go.
         ],
     )
 
-    # Add export button
     fig = _add_export_button(fig)
 
     return fig
 
 
 def plot_attendance_histogram(df: pd.DataFrame, data_state: str = "cleaned") -> go.Figure:
-    """
-    Histogram of event attendance with statistical annotations.
-
-    Args:
-        df: DataFrame with member data
-        data_state: Label indicating if data is "raw" or "cleaned"
-
-    Returns:
-        Enhanced Plotly figure with statistics
-    """
+    """Histogram of event attendance with statistical annotations."""
     if "Event_Attendance" not in df.columns:
         return go.Figure()
 
-    # Calculate statistics
     stats = _calculate_stats(df["Event_Attendance"])
 
-    # Create histogram with custom bins
     fig = go.Figure()
 
     fig.add_trace(
@@ -251,7 +193,6 @@ def plot_attendance_histogram(df: pd.DataFrame, data_state: str = "cleaned") -> 
         )
     )
 
-    # Add mean line
     fig.add_vline(
         x=stats["mean"],
         line_dash="dash",
@@ -260,7 +201,6 @@ def plot_attendance_histogram(df: pd.DataFrame, data_state: str = "cleaned") -> 
         annotation_position="top",
     )
 
-    # Add median line
     fig.add_vline(
         x=stats["median"],
         line_dash="dot",
@@ -269,7 +209,6 @@ def plot_attendance_histogram(df: pd.DataFrame, data_state: str = "cleaned") -> 
         annotation_position="bottom",
     )
 
-    # Update layout
     fig.update_layout(
         title={
             "text": f"Event Attendance Distribution<br><sub>Data State: {data_state.title()} | "
@@ -296,19 +235,13 @@ def plot_attendance_histogram(df: pd.DataFrame, data_state: str = "cleaned") -> 
         ],
     )
 
-    # Add export button
     fig = _add_export_button(fig)
 
     return fig
 
 
 def get_chart_export_config() -> Dict[str, Any]:
-    """
-    Get configuration for chart exports.
-
-    Returns:
-        Dictionary with export configuration
-    """
+    """Get configuration for chart exports."""
     return {
         "toImageButtonOptions": {
             "format": "png",
