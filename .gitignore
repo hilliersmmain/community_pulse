@@ -9,3 +9,6 @@ bandit-report.json
 demo_outputs/
 *.png
 !docs/screenshots/*.png
+.coverage
+coverage.xml
+.pytest_cache/

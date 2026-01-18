@@ -83,7 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `test_visualizer.py` - Chart rendering tests
   - `test_ui_helpers.py` - UI component tests
   - `test_emoji_removal.py` - Text sanitization tests
-- 90%+ test coverage
+- 85% test coverage (core modules)
 - All tests passing (70/70)
 
 ### Performance
