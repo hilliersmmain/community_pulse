@@ -10,9 +10,7 @@
 
 A production-grade data analytics platform that transforms raw, unstructured community data into actionable business intelligence.  By automating the entire data engineering lifecycle. From ingestion and cleaning to validation and visualization—it delivers real-time insights into community engagement, growth trends, and member behavior patterns.
 
-## Why I Built This
 
-As a former biology student used to dealing with messy organic data, I realized that human community data—with its duplicates, missing fields, and chaotic growth patterns—required the same rigorous treatment as biological datasets. I built Community Pulse to prove that a robust, automated data engineering pipeline can be just as elegant as the visualizations it powers. 
 ---
 
 ## [Try the Live Demo →](https://community-pulse.streamlit.app/)
