@@ -9,7 +9,6 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 
 class TestDemoChartsScript:
-
     def test_demo_charts_imports(self):
         try:
             import plotly.io as pio
@@ -21,7 +20,6 @@ class TestDemoChartsScript:
             assert True
         except ImportError as e:
             pytest.fail(f"Failed to import required module: {e}")
-
     def test_kaleido_available(self):
 
         try:
@@ -30,7 +28,6 @@ class TestDemoChartsScript:
             assert kaleido is not None
         except ImportError:
             pytest.fail("kaleido package not installed - required for demo_charts.py")
-
     def test_output_directory_creation(self):
 
         test_dir = "test_demo_outputs"
@@ -42,7 +39,6 @@ class TestDemoChartsScript:
             # Clean up
             if os.path.exists(test_dir):
                 os.rmdir(test_dir)
-
     def test_demo_chart_generation_workflow(self):
 
         from utils.data_generator import generate_messy_data
@@ -69,7 +65,6 @@ class TestDemoChartsScript:
 
         fig3 = plot_attendance_histogram(clean_df, data_state="cleaned")
         assert fig3 is not None
-
     def test_demo_charts_error_handling(self):
 
         # This test verifies the script file contains error handling
@@ -83,7 +78,6 @@ class TestDemoChartsScript:
         assert "except" in content, "Script should have exception handling"
         assert "ImportError" in content, "Script should check for ImportError"
         assert "sys.exit" in content, "Script should exit on critical errors"
-
     def test_demo_charts_has_docstring(self):
 
         script_path = Path(__file__).parent.parent / "community_pulse" / "demo_charts.py"
