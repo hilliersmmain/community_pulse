@@ -21,7 +21,6 @@ from utils.ui_helpers import (
 )
 from datetime import datetime
 
-# Page Config
 st.set_page_config(
     page_title="Community Pulse | Data Dashboard",
     page_icon="🔵",
@@ -29,10 +28,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for professional styling
 st.markdown("""
 <style>
-    /* Main header styling */
     .main h1 {
         color: #1f77b4;
         font-weight: 700;
@@ -40,19 +37,16 @@ st.markdown("""
         border-bottom: 3px solid #1f77b4;
     }
 
-    /* Padding fix for top of page */
     .block-container {
         padding-top: 3rem !important;
         padding-bottom: 5rem !important;
     }
     
-    /* Metric cards enhancement */
     [data-testid="stMetricValue"] {
         font-size: 1.8rem;
         font-weight: 600;
     }
     
-    /* Tab styling */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
     }
@@ -62,24 +56,20 @@ st.markdown("""
         font-weight: 500;
     }
     
-    /* Card/Widget styling */
     div.css-1r6slb0, div.stMetric {
         padding: 1rem;
         border-radius: 8px;
     }
     
-    /* Success/info box enhancement */
     .element-container div[data-testid="stMarkdownContainer"] > div[data-testid="stMarkdown"] {
         font-size: 0.95rem;
     }
     
-    /* Chart container shadow */
     .js-plotly-plot {
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
     
-    /* Button styling */
     .stButton > button {
         border-radius: 6px;
         font-weight: 500;
@@ -93,14 +83,11 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Initialize session state for UI features
 initialize_session_state()
 
-# Show welcome modal for first-time users
 if st.session_state.get('show_welcome', False):
     show_welcome_modal()
 
-# Title & Description
 st.title("Community Pulse Dashboard")
 st.markdown("""
 <div style="margin-bottom: 2rem;">
@@ -111,23 +98,18 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# What's New panel
 show_whats_new()
 
-# --- SIDEBAR Controls ---
 st.sidebar.header("Data Controls")
 
 DATA_PATH = "data/messy_club_data.csv"
 
-# Initialize session state variables
 if 'num_records' not in st.session_state:
     st.session_state['num_records'] = 500
 if 'messiness_level' not in st.session_state:
     st.session_state['messiness_level'] = 'medium'
 
-# --- 1. QUICK STATS SECTION ---
 with st.sidebar.expander("Quick Stats", expanded=True):
-    # Determine which dataset to use for stats
     stats_df = None
     stats_label = "metrics['overall_score']"
     
@@ -147,18 +129,15 @@ with st.sidebar.expander("Quick Stats", expanded=True):
         
         st.metric("Records", metrics['total_records'])
         
-        # Health Score with dynamic label
         score_val = f"{metrics['overall_score']}%"
         if is_cleaned:
             st.metric("Health Score", score_val)
         else:
             st.metric("Health Score", score_val, help="Score based on raw data")
         
-        # Last data load time
         if 'data_loaded_at' in st.session_state:
             st.caption(f"Last loaded: {st.session_state['data_loaded_at'].strftime('%H:%M:%S')}")
         
-        # Last cleaning time
         if st.session_state.get('cleaned') and 'cleaning_completed_at' in st.session_state:
             st.caption(f"Last cleaned: {st.session_state['cleaning_completed_at'].strftime('%H:%M:%S')}")
     else:

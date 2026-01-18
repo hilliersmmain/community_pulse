@@ -1,9 +1,4 @@
-"""
-Test suite to verify that emoji characters have been removed from chart captions.
-
-This test ensures that the professional presentation cleanup is complete by
-verifying that no emoji characters (specifically 📊) appear in chart annotations.
-"""
+"""Test suite to verify emoji removal from chart captions."""
 
 import pytest
 import pandas as pd
@@ -18,11 +13,9 @@ from utils.visualizer import (
 
 
 class TestEmojiRemoval:
-    """Test suite for verifying emoji removal from chart captions."""
 
     @pytest.fixture
     def sample_member_data(self):
-        """Fixture providing a sample DataFrame with member data."""
         dates = [datetime.now() - timedelta(days=30 * i) for i in range(12)]
         return pd.DataFrame(
             {
@@ -35,7 +28,7 @@ class TestEmojiRemoval:
         )
 
     def test_attendance_trend_no_emoji(self, sample_member_data):
-        """Test that attendance trend chart has no emoji in annotations."""
+
         fig = plot_attendance_trend(sample_member_data, data_state="cleaned")
 
         # Check all annotations for emojis
@@ -47,7 +40,7 @@ class TestEmojiRemoval:
             ), f"Found emoji character in annotation: {annotation.text}"
 
     def test_role_distribution_no_emoji(self, sample_member_data):
-        """Test that role distribution chart has no emoji in annotations."""
+
         fig = plot_role_distribution(sample_member_data, data_state="cleaned")
 
         # Check all annotations for emojis
@@ -59,7 +52,7 @@ class TestEmojiRemoval:
             ), f"Found emoji character in annotation: {annotation.text}"
 
     def test_attendance_histogram_no_emoji(self, sample_member_data):
-        """Test that attendance histogram has no emoji in annotations."""
+
         fig = plot_attendance_histogram(sample_member_data, data_state="cleaned")
 
         # Check all annotations for emojis
@@ -71,7 +64,7 @@ class TestEmojiRemoval:
             ), f"Found emoji character in annotation: {annotation.text}"
 
     def test_all_charts_contain_statistics(self, sample_member_data):
-        """Test that statistical information is still present after emoji removal."""
+
         # Attendance trend should have Mean, Median, and Total
         fig_trend = plot_attendance_trend(sample_member_data, data_state="cleaned")
         annotation_text = " ".join([ann.text for ann in fig_trend.layout.annotations])

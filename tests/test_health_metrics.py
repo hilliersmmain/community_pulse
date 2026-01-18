@@ -1,10 +1,4 @@
-"""
-Test suite for the DataHealthMetrics class.
 
-This module contains comprehensive tests for all health metric calculations
-including completeness, duplicate detection, formatting validation, and
-overall health score computation.
-"""
 
 import pytest
 import pandas as pd
@@ -13,18 +7,14 @@ from datetime import datetime
 import sys
 import os
 
-# Add parent directory to path to import utils
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from utils.health_metrics import DataHealthMetrics
 
 
 class TestDataHealthMetrics:
-    """Test suite for DataHealthMetrics class functionality."""
-
     @pytest.fixture
     def perfect_data(self):
-        """Fixture providing a perfect dataset with no issues."""
         return pd.DataFrame(
             {
                 "Name": ["John Doe", "Jane Smith", "Bob Wilson"],
@@ -37,7 +27,6 @@ class TestDataHealthMetrics:
 
     @pytest.fixture
     def data_with_missing_values(self):
-        """Fixture providing a dataset with missing values."""
         return pd.DataFrame(
             {
                 "Name": ["John Doe", "Jane Smith", np.nan],
@@ -49,7 +38,6 @@ class TestDataHealthMetrics:
 
     @pytest.fixture
     def data_with_duplicates(self):
-        """Fixture providing a dataset with duplicate records."""
         return pd.DataFrame(
             {
                 "Name": ["John Doe", "John Doe", "Jane Smith"],
@@ -61,7 +49,6 @@ class TestDataHealthMetrics:
 
     @pytest.fixture
     def data_with_bad_formatting(self):
-        """Fixture providing a dataset with formatting issues."""
         return pd.DataFrame(
             {
                 "Name": ["john doe", "JANE SMITH", "123invalid"],
@@ -73,14 +60,13 @@ class TestDataHealthMetrics:
         )
 
     def test_completeness_score_perfect_data(self, perfect_data):
-        """Test completeness score with perfect data (no missing values)."""
         metrics = DataHealthMetrics(perfect_data)
         score = metrics.calculate_completeness_score()
 
         assert score == 100.0
 
     def test_completeness_score_with_missing_values(self, data_with_missing_values):
-        """Test completeness score with missing values."""
+
         metrics = DataHealthMetrics(data_with_missing_values)
         score = metrics.calculate_completeness_score()
 
@@ -88,21 +74,21 @@ class TestDataHealthMetrics:
         assert 66.0 <= score <= 67.0
 
     def test_completeness_score_empty_dataframe(self):
-        """Test completeness score with empty dataframe."""
+
         metrics = DataHealthMetrics(pd.DataFrame())
         score = metrics.calculate_completeness_score()
 
         assert score == 0.0
 
     def test_duplicate_score_no_duplicates(self, perfect_data):
-        """Test duplicate score with no duplicates."""
+
         metrics = DataHealthMetrics(perfect_data)
         score = metrics.calculate_duplicate_score()
 
         assert score == 100.0
 
     def test_duplicate_score_with_duplicates(self, data_with_duplicates):
-        """Test duplicate score with duplicate records."""
+
         metrics = DataHealthMetrics(data_with_duplicates)
         score = metrics.calculate_duplicate_score()
 
@@ -110,14 +96,14 @@ class TestDataHealthMetrics:
         assert 66.0 <= score <= 67.0
 
     def test_duplicate_score_empty_dataframe(self):
-        """Test duplicate score with empty dataframe."""
+
         metrics = DataHealthMetrics(pd.DataFrame())
         score = metrics.calculate_duplicate_score()
 
         assert score == 100.0
 
     def test_formatting_score_perfect_data(self, perfect_data):
-        """Test formatting score with well-formatted data."""
+
         metrics = DataHealthMetrics(perfect_data)
         score = metrics.calculate_formatting_score()
 
@@ -125,7 +111,7 @@ class TestDataHealthMetrics:
         assert score >= 90.0
 
     def test_formatting_score_with_bad_formatting(self, data_with_bad_formatting):
-        """Test formatting score with formatting issues."""
+
         metrics = DataHealthMetrics(data_with_bad_formatting)
         score = metrics.calculate_formatting_score()
 
@@ -133,7 +119,7 @@ class TestDataHealthMetrics:
         assert score < 80.0
 
     def test_is_valid_email(self, perfect_data):
-        """Test email validation logic."""
+
         metrics = DataHealthMetrics(perfect_data)
 
         assert metrics._is_valid_email("test@example.com") is True
@@ -143,7 +129,7 @@ class TestDataHealthMetrics:
         assert metrics._is_valid_email("") is False
 
     def test_is_valid_name(self, perfect_data):
-        """Test name validation logic."""
+
         metrics = DataHealthMetrics(perfect_data)
 
         assert metrics._is_valid_name("John Doe") is True
@@ -154,14 +140,14 @@ class TestDataHealthMetrics:
         assert metrics._is_valid_name("") is False
 
     def test_count_valid_dates(self, perfect_data):
-        """Test date validation logic."""
+
         metrics = DataHealthMetrics(perfect_data)
 
         valid_count = metrics._count_valid_dates("Join_Date")
         assert valid_count == 3
 
     def test_count_valid_dates_with_invalid(self, data_with_bad_formatting):
-        """Test date validation with some invalid dates."""
+
         metrics = DataHealthMetrics(data_with_bad_formatting)
 
         valid_count = metrics._count_valid_dates("Join_Date")
@@ -169,7 +155,7 @@ class TestDataHealthMetrics:
         assert valid_count >= 1
 
     def test_overall_health_score_perfect_data(self, perfect_data):
-        """Test overall health score with perfect data."""
+
         metrics = DataHealthMetrics(perfect_data)
         score = metrics.calculate_overall_health_score()
 
@@ -178,7 +164,7 @@ class TestDataHealthMetrics:
         assert score <= 100.0
 
     def test_overall_health_score_mixed_quality(self, data_with_missing_values):
-        """Test overall health score with mixed quality data."""
+
         metrics = DataHealthMetrics(data_with_missing_values)
         score = metrics.calculate_overall_health_score()
 
@@ -186,7 +172,7 @@ class TestDataHealthMetrics:
         assert 50.0 <= score <= 90.0
 
     def test_get_all_metrics(self, perfect_data):
-        """Test getting all metrics at once."""
+
         metrics = DataHealthMetrics(perfect_data)
         all_metrics = metrics.get_all_metrics()
 
@@ -204,7 +190,7 @@ class TestDataHealthMetrics:
         assert isinstance(all_metrics["timestamp"], datetime)
 
     def test_get_detailed_metrics(self, data_with_duplicates):
-        """Test getting detailed metrics."""
+
         metrics = DataHealthMetrics(data_with_duplicates)
         detailed = metrics.get_detailed_metrics()
 
@@ -221,7 +207,7 @@ class TestDataHealthMetrics:
         assert "timestamp" in detailed
 
     def test_timestamp_is_recent(self, perfect_data):
-        """Test that timestamp is set to current time."""
+
         metrics = DataHealthMetrics(perfect_data)
 
         # Timestamp should be within the last second
@@ -229,7 +215,7 @@ class TestDataHealthMetrics:
         assert time_diff < 1.0
 
     def test_score_ranges(self, perfect_data):
-        """Test that all scores are within valid ranges (0-100)."""
+
         metrics = DataHealthMetrics(perfect_data)
 
         assert 0 <= metrics.calculate_completeness_score() <= 100
@@ -238,7 +224,7 @@ class TestDataHealthMetrics:
         assert 0 <= metrics.calculate_overall_health_score() <= 100
 
     def test_dataframe_copy(self, perfect_data):
-        """Test that the original dataframe is not modified."""
+
         original_len = len(perfect_data)
         metrics = DataHealthMetrics(perfect_data)
 
