@@ -1,9 +1,4 @@
-"""
-UI Helper Module
-
-Provides reusable UI components and utilities for the Community Pulse dashboard,
-including welcome modals, empty states, tooltips, and tutorial mode functionality.
-"""
+"""UI Helper Module"""
 
 import streamlit as st
 from typing import Optional
@@ -22,12 +17,7 @@ def initialize_session_state():
 
 
 def show_welcome_modal():
-    """
-    Display a welcome modal for first-time users.
-
-    Shows onboarding information and quick start guide.
-    Returns True if the modal should be shown, False otherwise.
-    """
+    """Display a welcome modal for first-time users."""
     if not st.session_state.get("show_welcome", False):
         return False
 
@@ -138,16 +128,7 @@ def show_empty_state(
     action_label: Optional[str] = None,
     action_callback: Optional[callable] = None,
 ):
-    """
-    Display an empty state message with optional action button.
-
-    Args:
-        icon: Emoji icon to display
-        title: Main title for empty state
-        message: Descriptive message
-        action_label: Optional label for action button
-        action_callback: Optional callback function for action button
-    """
+    """Display an empty state message with optional action button."""
     st.markdown(
         f"""
     <div style="
@@ -177,29 +158,12 @@ def show_empty_state(
 
 
 def show_info_tooltip(text: str, tooltip: str) -> str:
-    """
-    Create inline text with a tooltip icon.
-
-    Args:
-        text: Main text to display
-        tooltip: Tooltip content
-
-    Returns:
-        Markdown formatted string with tooltip
-    """
+    """Create inline text with a tooltip icon."""
     return f"{text} :gray[ⓘ]"
 
 
 def show_tutorial_step(step: int) -> bool:
-    """
-    Display tutorial overlay for the current step.
-
-    Args:
-        step: Current tutorial step number
-
-    Returns:
-        True if tutorial is active, False otherwise
-    """
+    """Display tutorial overlay for the current step."""
     if not st.session_state.get("tutorial_mode", False):
         return False
 
@@ -321,34 +285,17 @@ def show_whats_new():
 
 
 def show_loading_message(message: str = "Processing your data..."):
-    """
-    Display a context-aware loading message.
-
-    Args:
-        message: Custom loading message
-    """
+    """Display a context-aware loading message."""
     return st.spinner(f"{message}")
 
 
 def show_success_message(message: str, icon: str = ""):
-    """
-    Display a success message with icon.
-
-    Args:
-        message: Success message to display
-        icon: Emoji icon (default: checkmark)
-    """
+    """Display a success message with icon."""
     st.success(f"{message}")
 
 
 def show_error_message(message: str, details: Optional[str] = None):
-    """
-    Display a context-aware error message.
-
-    Args:
-        message: Main error message
-        details: Optional detailed error information
-    """
+    """Display a context-aware error message."""
     st.error(f"{message}")
     if details:
         with st.expander("Error Details"):
@@ -356,13 +303,7 @@ def show_error_message(message: str, details: Optional[str] = None):
 
 
 def show_warning_message(message: str, context: Optional[str] = None):
-    """
-    Display a context-aware warning message.
-
-    Args:
-        message: Warning message
-        context: Optional context or suggestion
-    """
+    """Display a context-aware warning message."""
     st.warning(f"{message}")
     if context:
         st.info(f"Tip: {context}")
@@ -401,19 +342,8 @@ MESSAGES = {
 
 
 def get_contextual_message(key: str, **kwargs) -> str:
-    """
-    Get a context-aware message template.
-
-    Args:
-        key: Message template key
-        **kwargs: Template variables
-
-    Returns:
-        Formatted message string, or empty string if key not found
-    """
+    """Get a context-aware message template."""
     template = MESSAGES.get(key, "")
     if isinstance(template, str):
         return template.format(**kwargs)
-    # For dictionary templates (empty states), return empty string
-    # These are accessed directly via MESSAGES[key]
     return ""

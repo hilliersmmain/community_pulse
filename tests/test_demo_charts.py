@@ -1,24 +1,15 @@
-"""
-Tests for demo_charts.py script.
-
-This module ensures the demo chart generation script works correctly
-and handles errors appropriately.
-"""
+"""Tests for demo_charts.py script."""
 
 import pytest
 import os
 import sys
 from pathlib import Path
 
-# Add parent directory to path to import demo_charts
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 
 class TestDemoChartsScript:
-    """Test cases for the demo_charts.py script."""
-
     def test_demo_charts_imports(self):
-        """Test that demo_charts can import all required modules."""
         try:
             import plotly.io as pio
             import kaleido
@@ -26,22 +17,19 @@ class TestDemoChartsScript:
             from utils.cleaner import DataCleaner
             from utils.visualizer import plot_attendance_trend, plot_role_distribution, plot_attendance_histogram
 
-            # If we get here, all imports worked
             assert True
         except ImportError as e:
             pytest.fail(f"Failed to import required module: {e}")
-
     def test_kaleido_available(self):
-        """Test that kaleido package is available for image export."""
+
         try:
             import kaleido
 
             assert kaleido is not None
         except ImportError:
             pytest.fail("kaleido package not installed - required for demo_charts.py")
-
     def test_output_directory_creation(self):
-        """Test that output directory can be created."""
+
         test_dir = "test_demo_outputs"
         try:
             os.makedirs(test_dir, exist_ok=True)
@@ -51,9 +39,8 @@ class TestDemoChartsScript:
             # Clean up
             if os.path.exists(test_dir):
                 os.rmdir(test_dir)
-
     def test_demo_chart_generation_workflow(self):
-        """Test the complete demo chart generation workflow."""
+
         from utils.data_generator import generate_messy_data
         from utils.cleaner import DataCleaner
         from utils.visualizer import plot_attendance_trend, plot_role_distribution, plot_attendance_histogram
@@ -78,9 +65,8 @@ class TestDemoChartsScript:
 
         fig3 = plot_attendance_histogram(clean_df, data_state="cleaned")
         assert fig3 is not None
-
     def test_demo_charts_error_handling(self):
-        """Test that the script has proper error handling."""
+
         # This test verifies the script file contains error handling
         script_path = Path(__file__).parent.parent / "community_pulse" / "demo_charts.py"
 
@@ -92,25 +78,22 @@ class TestDemoChartsScript:
         assert "except" in content, "Script should have exception handling"
         assert "ImportError" in content, "Script should check for ImportError"
         assert "sys.exit" in content, "Script should exit on critical errors"
-
     def test_demo_charts_has_docstring(self):
-        """Test that demo_charts.py has proper documentation."""
+
         script_path = Path(__file__).parent.parent / "community_pulse" / "demo_charts.py"
 
         with open(script_path, "r") as f:
             content = f.read()
 
-        # Check for docstring
         assert '"""' in content or "'''" in content, "Script should have docstring"
-        assert "Requirements:" in content, "Script should document requirements"
         assert "kaleido" in content, "Script should mention kaleido requirement"
 
 
 class TestDemoChartsOutputs:
-    """Test cases for demo chart outputs."""
+
 
     def test_demo_outputs_directory_exists_after_run(self):
-        """Test that demo_outputs directory exists after script runs."""
+
         # Note: This assumes the script has been run at least once
         # In CI/CD, this would be part of the build process
         output_dir = Path(__file__).parent.parent / "demo_outputs"

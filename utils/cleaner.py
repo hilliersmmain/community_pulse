@@ -6,12 +6,7 @@ from datetime import datetime
 
 class DataCleaner:
     def __init__(self, df: pd.DataFrame):
-        """
-        Initialize the DataCleaner with a raw dataframe.
-
-        Args:
-            df (pd.DataFrame): The raw input dataframe.
-        """
+        """Initialize the DataCleaner with a raw dataframe."""
         self.raw_df = df.copy()
         self.clean_df = df.copy()
         self.log: List[str] = []
@@ -19,28 +14,10 @@ class DataCleaner:
         self.end_timestamp = None
 
     def clean_all(self, steps=None) -> pd.DataFrame:
-        """
-        Runs the full data cleaning pipeline or selected steps.
-
-        Order of operations is critical:
-        1. Standardize text (Names, Emails)
-        2. Deduplicate (now that text is standard)
-        3. Fix Types (Dates)
-        4. Handle Missing Values
-
-        Args:
-            steps (list): List of cleaning steps to apply. If None, applies all steps.
-                         Valid steps: 'standardize_names', 'fix_emails', 'remove_duplicates',
-                                     'clean_dates', 'handle_missing_values'
-
-        Returns:
-            pd.DataFrame: The cleaned dataframe.
-        """
-        # If no steps specified, run all
+        """Runs the full data cleaning pipeline or selected steps."""
         if steps is None:
             steps = ["standardize_names", "fix_emails", "remove_duplicates", "clean_dates", "handle_missing_values"]
 
-        # Execute requested steps in order
         if "standardize_names" in steps:
             self.standardize_names()
         if "fix_emails" in steps:
@@ -59,13 +36,9 @@ class DataCleaner:
         """Removes duplicates based on Email and Name."""
         initial_count = len(self.clean_df)
 
-        # Drop strict duplicates
         self.clean_df = self.clean_df.drop_duplicates()
 
-        # Drop duplicates based on Email, keeping the first
-        # normalize email for check but don't modify column (already done in fix_emails, but safe here)
         if "Email" in self.clean_df.columns:
-            # We assume emails are already lowercased by fix_emails, but let's be safe
             temp_email = self.clean_df["Email"].astype(str).str.lower()
             self.clean_df = self.clean_df[~temp_email.duplicated(keep="first")]
 
@@ -87,16 +60,13 @@ class DataCleaner:
             if pd.isna(email):
                 return None
             email = str(email).lower().strip()
-            # Simple fix: replace ' at ' with '@'
             email = email.replace(" at ", "@")
-            # Basic regex validation
             if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                return None  # Invalid
+                return None
             return email
 
         self.clean_df["Email"] = self.clean_df["Email"].apply(clean_email)
 
-        # Drop rows where email became None
         n_before = len(self.clean_df)
         self.clean_df = self.clean_df.dropna(subset=["Email"])
         n_dropped = n_before - len(self.clean_df)
@@ -108,11 +78,8 @@ class DataCleaner:
         if "Join_Date" not in self.clean_df.columns:
             return
 
-        # Coerce errors will turn 'Unknown' or bad formats into NaT
         self.clean_df["Join_Date"] = pd.to_datetime(self.clean_df["Join_Date"], errors="coerce")
 
-        # Fill NaT with mode
-        # Create a copy of the series to avoid SettingWithCopy warning potential
         join_dates = self.clean_df["Join_Date"].copy()
         n_fixed = join_dates.isna().sum()
 
@@ -133,14 +100,12 @@ class DataCleaner:
 
 
 if __name__ == "__main__":
-    # Test script to run locally
     import sys
     import os
 
     data_path = "../data/messy_club_data.csv"
     if not os.path.exists(data_path):
         print("Data file not found. Run generator first.")
-        # Attempt to find it relative to current script if running from utils/
         if os.path.exists("../../data/messy_club_data.csv"):
             data_path = "../../data/messy_club_data.csv"
         else:
