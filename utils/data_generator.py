@@ -3,7 +3,7 @@ import numpy as np
 from typing import Optional
 from faker import Faker
 import random
-from datetime import datetime, timedelta
+from datetime import datetime
 
 fake = Faker()
 

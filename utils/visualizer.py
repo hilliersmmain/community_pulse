@@ -2,7 +2,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
-from typing import Optional, Dict, Any
+from typing import Dict, Any
 
 # Constants for chart configuration
 MIN_POINTS_FOR_TREND = 3

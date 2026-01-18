@@ -6,7 +6,7 @@ including welcome modals, empty states, tooltips, and tutorial mode functionalit
 """
 
 import streamlit as st
-from typing import List, Dict, Any, Optional
+from typing import Optional
 
 
 def initialize_session_state():
