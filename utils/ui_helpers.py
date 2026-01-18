@@ -11,28 +11,29 @@ from typing import Optional
 
 def initialize_session_state():
     """Initialize session state variables for UI features."""
-    if 'show_welcome' not in st.session_state:
-        st.session_state['show_welcome'] = True
-    if 'tutorial_mode' not in st.session_state:
-        st.session_state['tutorial_mode'] = False
-    if 'tutorial_step' not in st.session_state:
-        st.session_state['tutorial_step'] = 0
-    if 'show_whats_new' not in st.session_state:
-        st.session_state['show_whats_new'] = False
+    if "show_welcome" not in st.session_state:
+        st.session_state["show_welcome"] = True
+    if "tutorial_mode" not in st.session_state:
+        st.session_state["tutorial_mode"] = False
+    if "tutorial_step" not in st.session_state:
+        st.session_state["tutorial_step"] = 0
+    if "show_whats_new" not in st.session_state:
+        st.session_state["show_whats_new"] = False
 
 
 def show_welcome_modal():
     """
     Display a welcome modal for first-time users.
-    
+
     Shows onboarding information and quick start guide.
     Returns True if the modal should be shown, False otherwise.
     """
-    if not st.session_state.get('show_welcome', False):
+    if not st.session_state.get("show_welcome", False):
         return False
-    
+
     with st.container():
-        st.markdown("""
+        st.markdown(
+            """
         <style>
         .welcome-modal {
             padding: 2rem;
@@ -61,19 +62,24 @@ def show_welcome_modal():
             padding-left: 1.5rem;
         }
         </style>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("""
+        """,
+            unsafe_allow_html=True,
+        )
+
+        st.markdown(
+            """
         <div class="welcome-modal">
             <div class="welcome-title">Welcome to Community Pulse</div>
             <div class="welcome-subtitle">
                 Transform messy member data into actionable insights in minutes.
             </div>
         </div>
-        """, unsafe_allow_html=True)
-        
+        """,
+            unsafe_allow_html=True,
+        )
+
         col1, col2, col3 = st.columns(3)
-        
+
         with col1:
             st.markdown("### What You Can Do")
             st.markdown("""
@@ -82,7 +88,7 @@ def show_welcome_modal():
             - **Visualize** insights with interactive charts
             - **Export** cleaned data in multiple formats
             """)
-        
+
         with col2:
             st.markdown("### Quick Start")
             st.markdown("""
@@ -91,7 +97,7 @@ def show_welcome_modal():
             3. Click **"Run Cleaning Algorithms"**
             4. Explore insights in **"Analytics"**
             """)
-        
+
         with col3:
             st.markdown("### Pro Tips")
             st.markdown("""
@@ -100,28 +106,28 @@ def show_welcome_modal():
             - Enable **Tutorial Mode** for step-by-step guidance
             - Check **What's New** for latest features
             """)
-        
+
         st.divider()
-        
+
         col_dismiss, col_tutorial, col_start = st.columns([1, 1, 1])
-        
+
         with col_dismiss:
             if st.button("Dismiss", use_container_width=True):
-                st.session_state['show_welcome'] = False
+                st.session_state["show_welcome"] = False
                 st.rerun()
-        
+
         with col_tutorial:
             if st.button("Start Tutorial", type="secondary", use_container_width=True):
-                st.session_state['show_welcome'] = False
-                st.session_state['tutorial_mode'] = True
-                st.session_state['tutorial_step'] = 0
+                st.session_state["show_welcome"] = False
+                st.session_state["tutorial_mode"] = True
+                st.session_state["tutorial_step"] = 0
                 st.rerun()
-        
+
         with col_start:
             if st.button("Get Started", type="primary", use_container_width=True):
-                st.session_state['show_welcome'] = False
+                st.session_state["show_welcome"] = False
                 st.rerun()
-    
+
     return True
 
 
@@ -130,11 +136,11 @@ def show_empty_state(
     title: str = "No Data Available",
     message: str = "Get started by generating some data.",
     action_label: Optional[str] = None,
-    action_callback: Optional[callable] = None
+    action_callback: Optional[callable] = None,
 ):
     """
     Display an empty state message with optional action button.
-    
+
     Args:
         icon: Emoji icon to display
         title: Main title for empty state
@@ -142,7 +148,8 @@ def show_empty_state(
         action_label: Optional label for action button
         action_callback: Optional callback function for action button
     """
-    st.markdown(f"""
+    st.markdown(
+        f"""
     <div style="
         text-align: center;
         padding: 4rem 2rem;
@@ -158,8 +165,10 @@ def show_empty_state(
             {message}
         </div>
     </div>
-    """, unsafe_allow_html=True)
-    
+    """,
+        unsafe_allow_html=True,
+    )
+
     if action_label and action_callback:
         col1, col2, col3 = st.columns([1, 1, 1])
         with col2:
@@ -170,11 +179,11 @@ def show_empty_state(
 def show_info_tooltip(text: str, tooltip: str) -> str:
     """
     Create inline text with a tooltip icon.
-    
+
     Args:
         text: Main text to display
         tooltip: Tooltip content
-        
+
     Returns:
         Markdown formatted string with tooltip
     """
@@ -184,137 +193,137 @@ def show_info_tooltip(text: str, tooltip: str) -> str:
 def show_tutorial_step(step: int) -> bool:
     """
     Display tutorial overlay for the current step.
-    
+
     Args:
         step: Current tutorial step number
-        
+
     Returns:
         True if tutorial is active, False otherwise
     """
-    if not st.session_state.get('tutorial_mode', False):
+    if not st.session_state.get("tutorial_mode", False):
         return False
-    
-    current_step = st.session_state.get('tutorial_step', 0)
-    
+
+    current_step = st.session_state.get("tutorial_step", 0)
+
     if current_step != step:
         return False
-    
+
     tutorial_steps = {
         0: {
             "title": "Step 1: Generate Data",
             "message": "Use the sidebar controls to generate messy sample data. Adjust the number of records and messiness level to simulate real-world scenarios.",
-            "highlight": "sidebar"
+            "highlight": "sidebar",
         },
         1: {
             "title": "Step 2: Review KPIs",
             "message": "Check the Key Performance Indicators to understand the current data quality. Red metrics indicate issues that need attention.",
-            "highlight": "kpis"
+            "highlight": "kpis",
         },
         2: {
             "title": "Step 3: Configure Cleaning",
             "message": "Go to the Data Cleaning Ops tab and configure which cleaning steps to apply. Each step targets specific data quality issues.",
-            "highlight": "cleaning"
+            "highlight": "cleaning",
         },
         3: {
             "title": "Step 4: Run Cleaning",
             "message": "Click 'Run Cleaning Algorithms' to automatically fix data quality issues. Watch the execution log for details.",
-            "highlight": "run"
+            "highlight": "run",
         },
         4: {
             "title": "Step 5: View Analytics",
             "message": "Navigate to Analytics Dashboard to visualize insights from your cleaned data. Use filters to focus on specific segments.",
-            "highlight": "analytics"
-        }
+            "highlight": "analytics",
+        },
     }
-    
+
     if current_step >= len(tutorial_steps):
-        st.session_state['tutorial_mode'] = False
+        st.session_state["tutorial_mode"] = False
         st.success("Tutorial completed! You're now ready to use Community Pulse effectively.")
         return False
-    
+
     step_info = tutorial_steps[current_step]
-    
+
     st.info(f"""
     **{step_info['title']}**
-    
+
     {step_info['message']}
     """)
-    
+
     col1, col2, col3 = st.columns([1, 1, 1])
-    
+
     with col1:
         if st.button("Skip Tutorial"):
-            st.session_state['tutorial_mode'] = False
+            st.session_state["tutorial_mode"] = False
             st.rerun()
-    
+
     with col2:
         if current_step > 0:
             if st.button("Previous"):
-                st.session_state['tutorial_step'] = current_step - 1
+                st.session_state["tutorial_step"] = current_step - 1
                 st.rerun()
-    
+
     with col3:
         if st.button("Next", type="primary"):
-            st.session_state['tutorial_step'] = current_step + 1
+            st.session_state["tutorial_step"] = current_step + 1
             st.rerun()
-    
+
     return True
 
 
 def show_whats_new():
     """Display a "What's New" panel with recent updates."""
-    if not st.session_state.get('show_whats_new', False):
+    if not st.session_state.get("show_whats_new", False):
         return
-    
+
     with st.expander("What's New in Community Pulse", expanded=True):
         st.markdown("""
         ### Recent Updates
-        
+
         #### Version 2.0 - UX Enhancement Update
         *Released: December 2025*
-        
+
         **New Features:**
         - **Welcome Modal**: First-time user onboarding experience
         - **Empty States**: Helpful guidance when no data is available
         - **Enhanced Tooltips**: Comprehensive help for all features
         - **Tutorial Mode**: Step-by-step guided tour
         - **Improved KPIs**: More context and clearer metrics
-        
+
         **Improvements:**
         - Refined UI copy for better clarity
         - Context-aware messages and prompts
         - Better loading and error feedback
         - Enhanced accessibility features
-        
+
         **Bug Fixes:**
         - Fixed tooltip display issues
         - Improved mobile responsiveness
         - Enhanced error handling
-        
+
         ---
-        
+
         #### Previous Updates
-        
+
         **Version 1.5** - Interactive Analytics
         - Added before/after comparison charts
         - Enhanced chart export capabilities
         - Improved data state management
-        
+
         **Version 1.0** - Initial Release
         - Core data cleaning pipeline
         - Health metrics dashboard
         - Basic visualizations
         """)
-        
+
         if st.button("Got it!", key="dismiss_whats_new"):
-            st.session_state['show_whats_new'] = False
+            st.session_state["show_whats_new"] = False
             st.rerun()
 
 
 def show_loading_message(message: str = "Processing your data..."):
     """
     Display a context-aware loading message.
-    
+
     Args:
         message: Custom loading message
     """
@@ -324,7 +333,7 @@ def show_loading_message(message: str = "Processing your data..."):
 def show_success_message(message: str, icon: str = ""):
     """
     Display a success message with icon.
-    
+
     Args:
         message: Success message to display
         icon: Emoji icon (default: checkmark)
@@ -335,7 +344,7 @@ def show_success_message(message: str, icon: str = ""):
 def show_error_message(message: str, details: Optional[str] = None):
     """
     Display a context-aware error message.
-    
+
     Args:
         message: Main error message
         details: Optional detailed error information
@@ -349,7 +358,7 @@ def show_error_message(message: str, details: Optional[str] = None):
 def show_warning_message(message: str, context: Optional[str] = None):
     """
     Display a context-aware warning message.
-    
+
     Args:
         message: Warning message
         context: Optional context or suggestion
@@ -394,11 +403,11 @@ MESSAGES = {
 def get_contextual_message(key: str, **kwargs) -> str:
     """
     Get a context-aware message template.
-    
+
     Args:
         key: Message template key
         **kwargs: Template variables
-        
+
     Returns:
         Formatted message string, or empty string if key not found
     """
